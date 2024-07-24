@@ -9,21 +9,26 @@ import { usePostFetch } from '../../utils/fetch';
 
 function HomePage() {
 
-    const [count, setCount] = useState(0);
+    const [userData, setUserData] = useState<UserData>({
+      name: 'Jeff',
+      email: 'xdd@wp.pl',
+    });
     const response: DataTransfer<UserData> = useFetch<UserData>(SERVER_ADDRESS);
-    const post: DataTransfer<String> = usePostFetch({number: count}, SERVER_ADDRESS);
+    const post: DataTransfer<String> = usePostFetch(userData, SERVER_ADDRESS);
 
     useEffect(() => {
         if (response.error) { console.error(response.error.message); }
-        if (post.error) { console.error(post.error.message); }
-    }, [response.error, post.error]); 
+    }, [response.error]); 
+
+    useEffect(() => {
+      if (post.error) { console.error(post.error.message); }
+    }, [post.error]);
 
     const handleReceiveButton = async () => {
         response.request();
     };
 
     const handleSendButton = async () => {
-        setCount(count + 1);
         post.request();
     }
 
