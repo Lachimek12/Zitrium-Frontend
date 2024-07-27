@@ -1,8 +1,11 @@
+/* Libraries */
 import { Navigate, Route, Routes } from "react-router-dom";
-import HomePage from "../components/pages/HomePage";
-import { SimpleLayout } from "../components/layout/SimpleLayout";
-import { NotFound } from "../components/pages/404";
-import Account from "../components/pages/Account";
+
+/* App modules imports */
+import HomePage from "@pages/HomePage";
+import NotFound from "@pages/404";
+import Account from "@pages/Account";
+//import { SimpleLayout } from "@layout/SimpleLayout";
 
 function App() {
   return (

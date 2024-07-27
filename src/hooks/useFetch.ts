@@ -4,7 +4,7 @@ import { useState } from "react";
 /* Types imports */
 import { DataTransfer } from "@/types/ApiResponse";
 
-async function parseData(response: Response): Promise<any> {
+async function parseData(response: Response): Promise<unknown> {
   const contentType: string | null = response.headers.get("content-type");
 
   if (contentType?.includes("application/json")) {
@@ -27,8 +27,8 @@ function useFetch<T>(url: string, options?: RequestInit): DataTransfer<T> {
       if (!response.ok) {
         throw new Error(`HTTP error: Status ${response.status}`);
       }
-      let parsedData = await parseData(response);
-      setData(parsedData);
+      const parsedData = await parseData(response);
+      setData(parsedData as T | null);
       setError(null);
     } catch (err) {
       setError(err as Error);

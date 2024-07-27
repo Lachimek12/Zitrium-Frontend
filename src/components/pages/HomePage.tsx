@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from "react";
-import logo from "../../assets/images/logo.svg";
-import UserData from "../../types/UserData";
-import { DataTransfer } from "../../types/ApiResponse";
-import { useFetch } from "../../hooks/useFetch";
-import { SERVER_ADDRESS } from "../../utils/constants";
-import { usePostFetch } from "../../utils/fetch";
+/* Libraries */
+import { useState, useEffect } from "react";
+
+/* App modules imports */
+import { useFetch, usePostFetch } from "@/hooks/useFetch";
+import logo from "@assets/images/logo.svg";
+
+/* Types imports */
+import { SERVER_ADDRESS } from "@/utils/constants";
+import type UserData from "@/types/UserData";
+import { DataTransfer } from "@/types/ApiResponse";
 
 function HomePage() {
   const [count, setCount] = useState(0);
   const response: DataTransfer<UserData> = useFetch<UserData>(SERVER_ADDRESS);
-  const post: DataTransfer<String> = usePostFetch({ number: count }, SERVER_ADDRESS);
+  const post: DataTransfer<string> = usePostFetch({ number: count }, SERVER_ADDRESS);
 
   useEffect(() => {
     if (response.error) {
@@ -31,7 +35,7 @@ function HomePage() {
 
   return (
     <div className="text-center">
-      <header className="bg-[#282c34] min-h-screen flex flex-col items-center justify-center text-white text-[calc(10px+2vmin)]">
+      <header className="min-h-screen flex flex-col items-center justify-center text-white text-[calc(10px+2vmin)]">
         <img src={logo} className="h-[40vmin] pointer-events-none animate-[spin_20s_linear_infinite]" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
