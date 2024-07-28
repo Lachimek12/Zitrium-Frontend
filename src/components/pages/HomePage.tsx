@@ -63,7 +63,6 @@ function HomePage() {
             Send
           </button>
         </div>
-
         <div>
           <p>{response.data ? `${response.data.name} ${response.data.email}` : ""}</p>
         </div>
