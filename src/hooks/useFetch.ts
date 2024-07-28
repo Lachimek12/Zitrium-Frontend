@@ -18,10 +18,11 @@ async function parseData(response: Response): Promise<unknown> {
 
 function useFetch<T>(url: string, options?: RequestInit): DataTransfer<T> {
   const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   const request = async () => {
+    setLoading(true);
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
