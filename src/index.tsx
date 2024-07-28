@@ -4,13 +4,11 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
 /* App modules imports */
-import "./assets/styles/tailwind.css";
+import "@assets/styles/index.css";
 import App from "./app/App";
 // import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
   <BrowserRouter>

@@ -7,12 +7,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 // import { SERVER_ADDRESS } from "@utils/constants";
 // import { usePostFetch } from "@/hooks/useFetch";
 // import { DataTransfer } from "../../types/ApiResponse";
-import { ClosedEye, OpenedEye } from "@components/common/icons/eye";
+import { ClosedEye, OpenedEye } from "@components/icons/eye";
 
 /* Types imports */
 import { RegisterFormFields, registerSchema } from "@/types/FormSchemas";
 
-function Account() {
+function Register() {
   const {
     register,
     handleSubmit,
@@ -87,4 +87,4 @@ function Account() {
   );
 }
 
-export default Account;
+export default Register;

@@ -27,9 +27,10 @@
     "baseUrl": "./src",
     "paths": {
       "@customTypes/*": ["./types/*"],
-      "@components/*": ["./components/*"],
+      "@contexts/*": ["./contexts/*"],
       "@pages/*": ["./components/pages/*"],
       "@layout/*": ["./components/layout/*"],
+      "@components/*": ["./components/common/*"],
       "@assets/*": ["./assets/*"],
       "@utils/*": ["./utils/*"],
       "@/*": ["./*"]
