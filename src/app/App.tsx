@@ -6,6 +6,7 @@ import HomePage from "@pages/HomePage";
 import NotFound from "@pages/404";
 import Register from "@pages/Register";
 import Profile from "@pages/Profile";
+import Test from "@pages/Test";
 import ProtectedRoute from "@components/ProtectedRoute";
 import MainLayout from "@layout/MainLayout";
 
@@ -31,6 +32,7 @@ function App() {
         </Route>
 
         {/* Catch-all route for undefined paths */}
+        <Route path="/test" element={<Test />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/404" />} />
       </Routes>
