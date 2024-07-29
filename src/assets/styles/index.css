@@ -6,6 +6,7 @@ body {
   @apply bg-background-800 text-white;
 }
 
+button:not(.exclude),
 button[type="submit"] {
   @apply rounded-md bg-gradient-to-r from-primary-500 to-secondary-600 px-6 py-3 text-black hover:opacity-50;
 }

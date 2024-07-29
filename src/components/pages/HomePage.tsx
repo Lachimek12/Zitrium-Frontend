@@ -9,6 +9,7 @@ import logo from "@assets/images/logo.svg";
 import { SERVER_ADDRESS } from "@/utils/constants";
 import { DataTransfer } from "@/types/ApiResponse";
 import type UserData from "@/types/UserData";
+import SideBar from "@components/SideBar";
 
 function HomePage() {
   const [userData, setUserData] = useState<UserData>({
@@ -39,8 +40,9 @@ function HomePage() {
   };
 
   return (
-    <div className="text-center">
-      <header className="min-h-screen flex flex-col items-center justify-center text-white text-[calc(10px+2vmin)]">
+    <div className="relative flex-grow flex">
+      <SideBar />
+      <header className="flex-1 flex flex-col items-center justify-center text-center text-white text-[calc(10px+2vmin)]">
         <img src={logo} className="h-[40vmin] pointer-events-none animate-[spin_20s_linear_infinite]" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.

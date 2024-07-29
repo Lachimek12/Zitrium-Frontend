@@ -56,7 +56,7 @@ function Register() {
           />
           <button
             type="button"
-            className="absolute bg-background-700 rounded-md inset-y-0 right-0 flex items-center px-4 text-primary-500"
+            className="exclude absolute bg-transparent rounded-md inset-y-0 right-0 flex items-center px-4 text-primary-500"
             onClick={togglePasswordVisibility}
           >
             {isPasswordVisible ? <OpenedEye /> : <ClosedEye />}
@@ -72,7 +72,7 @@ function Register() {
           />
           <button
             type="button"
-            className="absolute bg-background-700 rounded-md inset-y-0 right-0 flex items-center px-4 text-primary-500"
+            className="exclude absolute bg-transparent rounded-md inset-y-0 right-0 flex items-center px-4 text-primary-500"
             onClick={toggleConfirmPasswordVisibility}
           >
             {isConfirmPasswordVisible ? <OpenedEye /> : <ClosedEye />}
