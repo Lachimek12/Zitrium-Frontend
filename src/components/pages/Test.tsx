@@ -7,36 +7,30 @@ import expand from "@assets/images/expand.svg";
 function Test() {
   const [isOpen, setIsOpen] = useState(false);
   const contentBox = useRef<HTMLDivElement | null>(null);
-  const [skibidi, setSkibidi] = useState<number>(0);
+  //const [skibidi, setSkibidi] = useState<number>(0);
 
   useEffect(() => {
-    // Update skibidi with the width of contentBox when component mounts or when contentBox changes
     if (contentBox.current) {
-      setSkibidi(contentBox.current.offsetWidth);
+      if (isOpen) {
+        contentBox.current.style.width = "200px";
+      } else {
+        contentBox.current.style.width = "0px";
+      }
     }
-  }, [isOpen]); // Add contentBox.current to dependencies if it changes
+  }, [isOpen]);
 
   return (
     <>
-      <div
-        style={{
-          transform: `translateX(${isOpen ? "0" : `-${skibidi}px`})`,
-        }}
-        className={`left-0 duration-300 transition-all flex h-screen`}
-      >
-        <div ref={contentBox} className=" bg-background-700">
-          <p>Skibidi</p>
+      <div className="flex h-full">
+        <div className="flex relative top-0 left-0 overflow-x-hidden">
+          <div ref={contentBox} className="duration-500 bg-red-400"></div>
+          <div className="w-10 bg-green-400"></div>
         </div>
-        <button
-          className="bg-background-700 w-10"
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-        >
-          <img src={expand} className={` ${isOpen ? "-rotate-90" : "rotate-90"} scale-x-[3.0]`} />
-        </button>
-        <div className="flex justify-center w-full">
-          <p className="self-center">Dziala</p>
+        <div className="inline-flex items-center justify-center w-full">
+          <hr className="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+          <span className="absolute px-3 font-medium text-gray-900 -translate-x-1/ bg-background-800 left-1/2 dark:text-white ">
+            or
+          </span>
         </div>
       </div>
     </>

@@ -7,8 +7,10 @@ import NotFound from "@pages/404";
 import Register from "@pages/Register";
 import Profile from "@pages/Profile";
 import Test from "@pages/Test";
+import Login from "@pages/Login";
 import ProtectedRoute from "@components/ProtectedRoute";
 import MainLayout from "@layout/MainLayout";
+import FormLayout from "@layout/FormLayout";
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/app" element={<HomePage />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/test" element={<Test />} />
           <Route
             path="/profile"
             element={
@@ -31,9 +34,14 @@ function App() {
           />
         </Route>
 
-        {/* Catch-all route for undefined paths */}
-        <Route path="/test" element={<Test />} />
+        {/* Routes without any layout */}
+        <Route element={<FormLayout />}>
+          <Route path="/signin" element={<Navigate to="login" />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
         <Route path="/404" element={<NotFound />} />
+
+        {/* Catch-all route for undefined paths */}
         <Route path="*" element={<Navigate to="/404" />} />
       </Routes>
     </>
