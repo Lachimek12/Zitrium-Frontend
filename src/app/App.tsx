@@ -8,6 +8,7 @@ import Register from "@pages/Register";
 import Profile from "@pages/Profile";
 import Test from "@pages/Test";
 import Login from "@pages/Login";
+import VerifyEmail from "@pages/VerifyEmail"
 import ProtectedRoute from "@components/ProtectedRoute";
 import MainLayout from "@layout/MainLayout";
 import FormLayout from "@layout/FormLayout";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/app" element={<HomePage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/test" element={<Test />} />
+          <Route path="/verifyEmail" element={<VerifyEmail />} />
           <Route
             path="/profile"
             element={

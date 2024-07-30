@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 /* App modules imports */
 // import { SERVER_ADDRESS } from "@utils/constants";
-// import { usePostFetch } from "@/hooks/useFetch";
+import { usePostFetch } from "@/hooks/useFetch";
 // import { DataTransfer } from "../../types/ApiResponse";
 import { ClosedEye, OpenedEye } from "@components/icons/eye";
 
@@ -24,9 +24,13 @@ function Register() {
 
   const onSubmit: SubmitHandler<RegisterFormFields> = async (data) => {
     console.log(data);
+    setRegisterData(data);
+    sendRegister.request();
   };
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+  const [registerData, setRegisterData] = useState<RegisterFormFields>();
+  const sendRegister = usePostFetch(registerData, 'http://localhost:3000/register');
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prevState) => !prevState);
@@ -43,8 +47,8 @@ function Register() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1 className="self-center text-[4vmin]">Register</h1>
-        <input {...register("userName")} type="text" placeholder="User Name" />
-        {errors.userName && <div className="text-red-500">{errors.userName.message}</div>}
+        <input {...register("username")} type="text" placeholder="User Name" />
+        {errors.username && <div className="text-red-500">{errors.username.message}</div>}
         <input {...register("email")} type="text" placeholder="Email" />
         {errors.email && <div className="text-red-500">{errors.email.message}</div>}
         <div className="relative w-full">

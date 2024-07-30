@@ -3,7 +3,7 @@ import { z } from "zod";
 
 const registerSchema = z
   .object({
-    userName: z
+    username: z
       .string()
       .min(1, { message: "User Name is required" })
       .min(3, { message: "User Name has to be at least 3 characters long" }),
