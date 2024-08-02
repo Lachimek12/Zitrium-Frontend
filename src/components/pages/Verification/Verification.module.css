@@ -1,0 +1,10 @@
+.character {
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background-color: theme("colors.background.700");
+}
+
+.container {
+  height: 100%;
+}
