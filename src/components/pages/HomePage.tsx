@@ -10,14 +10,16 @@ import { SERVER_ADDRESS } from "@/utils/constants";
 import { DataTransfer } from "@/types/ApiResponse";
 import type UserData from "@/types/UserData";
 import SideBar from "@components/SideBar";
+import { useAuth } from "@contexts/AuthContext";
 
 function HomePage() {
-  const [userData, setUserData] = useState<UserData>({
+  const [userData /* setUserData */] = useState<UserData>({
     name: "Jeff",
     email: "xdd@wp.pl",
   });
   const response: DataTransfer<UserData> = useFetch<UserData>(SERVER_ADDRESS);
   const post: DataTransfer<string> = usePostFetch(userData, SERVER_ADDRESS);
+  const gowno = useAuth();
 
   useEffect(() => {
     if (response.error) {
@@ -37,7 +39,10 @@ function HomePage() {
 
   const handleSendButton = async () => {
     post.request();
+    console.log("skibidi");
   };
+
+  console.log(gowno);
 
   return (
     <div className="relative flex flex-grow">

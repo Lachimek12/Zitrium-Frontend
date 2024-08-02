@@ -12,10 +12,11 @@ import Verification from "@pages/Verification";
 import ProtectedRoute from "@components/ProtectedRoute";
 import MainLayout from "@layout/MainLayout";
 import FormLayout from "@layout/FormLayout";
+import { AuthProvider } from "@contexts/AuthContext";
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <Routes>
         {/* Redirect from root to /app */}
         <Route path="/" element={<Navigate to="/app" />} />
@@ -49,14 +50,8 @@ function App() {
         {/* Catch-all route for undefined paths */}
         <Route path="*" element={<Navigate to="/404" />} />
       </Routes>
-    </>
+    </AuthProvider>
   );
 }
 
 export default App;
-
-/*
-        <Route path="*" element={<SimpleLayout />}>
-          <Route index element={<Navigate to="/404" />} />
-        </Route>
-        */

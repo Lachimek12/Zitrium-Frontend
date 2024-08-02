@@ -8,14 +8,14 @@ import { useAuth } from "@contexts/AuthContext";
 type ProtectedRouteProps = PropsWithChildren;
 
 function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const user = useAuth();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user === null) {
+    if (isAuthenticated === false) {
       navigate("/register", { replace: true });
     }
-  }, [navigate, user]);
+  }, [navigate, isAuthenticated]);
 
   return children;
 }
