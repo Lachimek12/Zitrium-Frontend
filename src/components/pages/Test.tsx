@@ -1,13 +1,21 @@
 /* Libraries */
 import { useEffect, useRef, useState } from "react";
+import { useSessionStorage } from "usehooks-ts";
 
 /* App modules imports */
 import expand from "@assets/images/expand.svg";
+import { removeSessionStorageItem } from "@/services/SessionStorage";
 
 function Test() {
   const [isOpen, setIsOpen] = useState(false);
   const contentBox = useRef<HTMLDivElement | null>(null);
   //const [skibidi, setSkibidi] = useState<number>(0);
+
+  const [value, setValue, removeValue] = useSessionStorage<number>("key", 0);
+
+  useEffect(() => {
+    removeSessionStorageItem("skibidi");
+  }, []);
 
   useEffect(() => {
     if (contentBox.current) {
@@ -22,15 +30,20 @@ function Test() {
   return (
     <>
       <div className="flex h-full">
-        <div className="flex relative top-0 left-0 overflow-x-hidden">
-          <div ref={contentBox} className="duration-500 bg-red-400"></div>
+        <div className="relative left-0 top-0 flex overflow-x-hidden">
+          <div ref={contentBox} className="bg-red-400 duration-500"></div>
           <div className="w-10 bg-green-400"></div>
         </div>
-        <div className="inline-flex items-center justify-center w-full">
-          <hr className="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-          <span className="absolute px-3 font-medium text-gray-900 -translate-x-1/ bg-background-800 left-1/2 dark:text-white ">
-            or
-          </span>
+        <div className="w-full overflow-y-scroll">
+          <button
+            className="h-10 w-full"
+            onClick={() => {
+              setValue(value + 1);
+              setIsOpen(!isOpen);
+            }}
+          ></button>
+          <div>{value}</div>
+          <div className="h-[3000px] w-10 bg-red-600"></div>
         </div>
       </div>
     </>

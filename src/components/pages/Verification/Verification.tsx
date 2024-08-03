@@ -1,13 +1,11 @@
 /* Libraries */
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import VerificationInput from "react-verification-input";
 
 /* App modules imports */
 import styles from "./Verification.module.css";
 
-interface Test {
+interface Test extends FieldValues {
   num: number;
 }
 
@@ -37,6 +35,7 @@ function Verification() {
           <VerificationInput
             classNames={{
               character: styles.character,
+              characterSelected: styles.characterSelected,
             }}
           />
         </div>

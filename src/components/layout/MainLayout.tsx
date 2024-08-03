@@ -6,7 +6,7 @@ import Navbar from "@components/Navbar";
 
 function MainLayout() {
   return (
-    <div className="h-screen flex flex-col">
+    <div className="flex h-screen flex-col">
       <Navbar />
       <Outlet />
     </div>

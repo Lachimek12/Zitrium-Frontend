@@ -41,7 +41,14 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Navigate to="/signup" />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/verification" element={<Verification />} />
+          <Route
+            path="/verification"
+            element={
+              <ProtectedRoute>
+                <Verification />
+              </ProtectedRoute>
+            }
+          />
         </Route>
 
         {/* Routes without any layout */}

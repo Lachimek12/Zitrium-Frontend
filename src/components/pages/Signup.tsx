@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSessionStorage } from "usehooks-ts";
+import { useNavigate } from "react-router-dom";
 
 /* App modules imports */
 // import { SERVER_ADDRESS } from "@utils/constants";
@@ -11,6 +13,7 @@ import { ClosedEye, OpenedEye } from "@components/icons/eye";
 
 /* Types imports */
 import { RegisterFormFields, registerSchema } from "@/types/FormSchemas";
+import { removeSessionStorageItem, SIGN_UP_INFO } from "@/services/SessionStorage";
 
 function Signup() {
   const {
@@ -22,11 +25,13 @@ function Signup() {
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit: SubmitHandler<RegisterFormFields> = async (data) => {
-    console.log(data);
-  };
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+  const [signUpInfo, setSignUpInfo] = useSessionStorage(SIGN_UP_INFO, "");
+  const navigate = useNavigate();
+
+  // Value removed if comming back from verification in order to route user correctly
+  removeSessionStorageItem(SIGN_UP_INFO);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prevState) => !prevState);
@@ -34,6 +39,13 @@ function Signup() {
 
   const toggleConfirmPasswordVisibility = () => {
     setIsConfirmPasswordVisible((prevState) => !prevState);
+  };
+
+  const onSubmit: SubmitHandler<RegisterFormFields> = async (data) => {
+    console.log(data);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setSignUpInfo(data.email);
+    navigate("/verification");
   };
 
   return (
