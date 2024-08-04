@@ -10,6 +10,7 @@ import Test from "@pages/Test";
 import Login from "@pages/Login";
 import Verification from "@pages/Verification";
 import ProtectedRoute from "@components/ProtectedRoute";
+import VerificationRoute from "@components/VerificationRoute";
 import MainLayout from "@layout/MainLayout";
 import FormLayout from "@layout/FormLayout";
 import { AuthProvider } from "@contexts/AuthContext";
@@ -44,9 +45,9 @@ function App() {
           <Route
             path="/verification"
             element={
-              <ProtectedRoute>
+              <VerificationRoute>
                 <Verification />
-              </ProtectedRoute>
+              </VerificationRoute>
             }
           />
         </Route>

@@ -6,6 +6,15 @@ function removeSessionStorageItem(key: string) {
   }
 }
 
+function getSessionStorageItem<T>(key: string): T | null {
+  const item = sessionStorage.getItem(key);
+  if (item !== null) {
+    return item as T;
+  } else {
+    return null;
+  }
+}
+
 function existSessionStorageItem(key: string) {
   const item = sessionStorage.getItem(key);
   return item !== null;
@@ -17,4 +26,4 @@ function existSessionStorageItem(key: string) {
 
 export const SIGN_UP_INFO = "signUpInfo";
 
-export { removeSessionStorageItem, existSessionStorageItem };
+export { removeSessionStorageItem, getSessionStorageItem, existSessionStorageItem };
