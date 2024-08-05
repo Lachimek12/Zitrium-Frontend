@@ -13,7 +13,7 @@ import { ClosedEye, OpenedEye } from "@components/icons/eye";
 
 /* Types imports */
 import { RegisterFormFields, registerSchema } from "@/types/FormSchemas";
-import { removeSessionStorageItem, SIGN_UP_INFO } from "@/services/SessionStorage";
+import { removeSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/SessionStorage";
 
 function Signup() {
   const {
@@ -32,6 +32,7 @@ function Signup() {
 
   // Value removed if comming back from verification in order to route user correctly
   removeSessionStorageItem(SIGN_UP_INFO);
+  removeSessionStorageItem(TIMEOUT);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prevState) => !prevState);

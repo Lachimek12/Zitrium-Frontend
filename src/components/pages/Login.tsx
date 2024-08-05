@@ -19,6 +19,7 @@ function Login() {
   };
 
   const {
+    register,
     handleSubmit,
     // setError,
     formState: { isSubmitting },
@@ -36,9 +37,14 @@ function Login() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1 className="mb-6 text-5xl">Sign In</h1>
-        <input type="text" placeholder="email" className="" />
+        <input type="text" placeholder="email" {...register("email")} />
         <div className="relative">
-          <input className="w-full" type={isPasswordVisible ? "text" : "password"} placeholder="Password" />
+          <input
+            className="w-full"
+            type={isPasswordVisible ? "text" : "password"}
+            placeholder="Password"
+            {...register("password")}
+          />
           <button
             type="button"
             className="exclude absolute inset-y-0 right-0 flex items-center rounded-md bg-transparent px-4 text-primary-500 opacity-50 hover:opacity-100"

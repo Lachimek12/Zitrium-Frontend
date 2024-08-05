@@ -20,10 +20,13 @@ function existSessionStorageItem(key: string) {
   return item !== null;
 }
 
+function useSessionStorageItem<T>(key: string, initialValue: T): [T, (value: T) => void] {}
+
 /**
  * Session key used for registration and verification
  */
 
 export const SIGN_UP_INFO = "signUpInfo";
+export const TIMEOUT = "timeout";
 
 export { removeSessionStorageItem, getSessionStorageItem, existSessionStorageItem };

@@ -11,9 +11,10 @@ function Test() {
   const contentBox = useRef<HTMLDivElement | null>(null);
   //const [skibidi, setSkibidi] = useState<number>(0);
 
-  const [value, setValue, removeValue] = useSessionStorage<number>("key", 0);
+  const [value, setValue] = useSessionStorage<number>("key", 0);
 
   useEffect(() => {
+    setValue(value);
     removeSessionStorageItem("skibidi");
   }, []);
 
