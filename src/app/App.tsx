@@ -12,6 +12,7 @@ import VerifyEmail from "@pages/VerifyEmail"
 import ProtectedRoute from "@components/ProtectedRoute";
 import MainLayout from "@layout/MainLayout";
 import FormLayout from "@layout/FormLayout";
+import Logout from "@pages/Logout";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/test" element={<Test />} />
           <Route path="/verifyEmail" element={<VerifyEmail />} />
+          <Route path="/logout" element={<Logout />} />
           <Route
             path="/profile"
             element={
