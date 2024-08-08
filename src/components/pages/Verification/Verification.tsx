@@ -1,26 +1,30 @@
 /* Libraries */
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import VerificationInput from "react-verification-input";
 import { useTimer } from "react-timer-hook";
 import { useSessionStorage } from "usehooks-ts";
+import { useEffect, useState } from "react";
+import axios, { AxiosError } from "axios";
 
 /* App modules imports */
 import styles from "./Verification.module.css";
 import { getNextDate } from "@utils/time";
 import { getSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/SessionStorage";
-import { VERIFICATION_CODE_EXPIRATION_TIMEOUT } from "@utils/constants";
-import { useEffect, useState } from "react";
+import {
+  VERIFICATION_CODE_EXPIRATION_TIMEOUT,
+  VERIFY_EMAIL_ADDRESS,
+  RESEND_VERIFICATION_ADDRESS,
+} from "@utils/constants";
 
-type VerificationForm = {
-  code: string;
-};
+/* Types imports */
+import { VerificationForm } from "@/types/FormSchemas";
 
 function Verification() {
   const {
     register,
     handleSubmit,
-    // setError,
-    formState: { isSubmitting },
+    setError,
+    formState: { errors, isSubmitting },
   } = useForm<VerificationForm>();
 
   const [expirationTime, setExpirationTime] = useSessionStorage<number>(
@@ -29,7 +33,7 @@ function Verification() {
   );
   const signUpInfo = getSessionStorageItem<string>(SIGN_UP_INFO);
   const { seconds, minutes, restart } = useTimer({ expiryTimestamp: new Date(expirationTime) });
-  const [code, setCode] = useState("");
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     setExpirationTime(expirationTime);
@@ -38,6 +42,19 @@ function Verification() {
   const onSubmit: SubmitHandler<VerificationForm> = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log(data);
+    axios
+      .post(VERIFY_EMAIL_ADDRESS, data)
+      .then((response) => {
+        console.log("Response: ", response);
+      })
+      .catch((error: AxiosError) => {
+        console.error("Error: ", error);
+        if (error.response) {
+          setError("root", { message: error.response.data as string });
+        } else {
+          setError("root", { message: "Unknown server error" });
+        }
+      });
   };
 
   const resendCode = async () => {
@@ -57,7 +74,6 @@ function Verification() {
           <h1 className="mb-6 text-5xl">Sign Up</h1>
           <p className="text-gray-500">Step 2/2</p>
         </div>
-        <div>{code}</div>
         <div>
           Please enter the verification code sent to your email address <strong>{signUpInfo}</strong>
         </div>
@@ -65,7 +81,7 @@ function Verification() {
           <div className="flex justify-center">
             <VerificationInput
               onChange={(input: string) => {
-                setCode(input);
+                setToken(input);
               }}
               classNames={{
                 character: styles.character,
@@ -89,10 +105,12 @@ function Verification() {
             )}
           </div>
         </div>
-        <button className="mt-6" disabled={isSubmitting || code.length != 6} type="submit">
+        <button className="mt-6" disabled={isSubmitting || token.length != 6} type="submit">
           {isSubmitting ? "...Loading" : "Verify"}
         </button>
-        <input className="hidden" type="text" value={code} {...register("code")} />
+        <input className="hidden" type="text" value={token} {...register("token")} />
+        <input className="hidden" type="text" value={signUpInfo!} {...register("email")} />
+        {errors.root && <div className="text-red-500">{errors.root.message}</div>}
       </form>
     </div>
   );

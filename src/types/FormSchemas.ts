@@ -27,5 +27,10 @@ const registerSchema = z
 
 type RegisterFormFields = z.infer<typeof registerSchema>;
 
-export type { RegisterFormFields };
+type VerificationForm = {
+  email: string;
+  token: string;
+};
+
+export type { RegisterFormFields, VerificationForm };
 export { registerSchema };

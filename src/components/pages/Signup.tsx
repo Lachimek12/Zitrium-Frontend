@@ -4,11 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSessionStorage } from "usehooks-ts";
 import { useNavigate } from "react-router-dom";
+import axios, { AxiosError } from "axios";
 
 /* App modules imports */
-// import { SERVER_ADDRESS } from "@utils/constants";
-// import { usePostFetch } from "@/hooks/useFetch";
-// import { DataTransfer } from "../../types/ApiResponse";
+import { REGISTER_ADDRESS } from "@utils/constants";
 import { ClosedEye, OpenedEye } from "@components/icons/eye";
 
 /* Types imports */
@@ -19,7 +18,7 @@ function Signup() {
   const {
     register,
     handleSubmit,
-    // setError,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormFields>({
     resolver: zodResolver(registerSchema),
@@ -27,7 +26,7 @@ function Signup() {
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
-  const [signUpInfo, setSignUpInfo] = useSessionStorage(SIGN_UP_INFO, "");
+  const [, setSignUpInfo] = useSessionStorage(SIGN_UP_INFO, "");
   const navigate = useNavigate();
 
   // Value removed if comming back from verification in order to route user correctly
@@ -44,9 +43,21 @@ function Signup() {
 
   const onSubmit: SubmitHandler<RegisterFormFields> = async (data) => {
     console.log(data);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setSignUpInfo(data.email);
-    navigate("/verification");
+    axios
+      .post(REGISTER_ADDRESS, data)
+      .then((response) => {
+        console.log("Response: ", response);
+        setSignUpInfo(data.email);
+        navigate("/verification");
+      })
+      .catch((error: AxiosError) => {
+        console.error("Error: ", error);
+        if (error.response) {
+          setError("root", { message: error.response.data as string });
+        } else {
+          setError("root", { message: "Unknown server error" });
+        }
+      });
   };
 
   return (
@@ -106,6 +117,7 @@ function Signup() {
         <button className="mt-6" disabled={isSubmitting} type="submit">
           {isSubmitting ? "...Loading" : "Submit"}
         </button>
+        {errors.root && <div className="text-red-500">{errors.root.message}</div>}
       </form>
     </div>
   );

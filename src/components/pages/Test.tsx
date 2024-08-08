@@ -3,20 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { useSessionStorage } from "usehooks-ts";
 
 /* App modules imports */
-import expand from "@assets/images/expand.svg";
-import { removeSessionStorageItem } from "@/services/SessionStorage";
 
 function Test() {
   const [isOpen, setIsOpen] = useState(false);
   const contentBox = useRef<HTMLDivElement | null>(null);
-  //const [skibidi, setSkibidi] = useState<number>(0);
 
   const [value, setValue] = useSessionStorage<number>("key", 0);
-
-  useEffect(() => {
-    setValue(value);
-    removeSessionStorageItem("skibidi");
-  }, []);
 
   useEffect(() => {
     if (contentBox.current) {
@@ -28,27 +20,41 @@ function Test() {
     }
   }, [isOpen]);
 
+  const items = Array.from({ length: 9 });
+
   return (
     <>
       <div className="flex h-full">
         <div className="relative left-0 top-0 flex overflow-x-hidden">
           <div ref={contentBox} className="bg-red-400 duration-500"></div>
-          <div className="w-10 bg-green-400"></div>
-        </div>
-        <div className="w-full overflow-y-scroll">
-          <button
-            className="h-10 w-full"
+          <div
+            className="w-10 bg-green-400"
             onClick={() => {
               setValue(value + 1);
               setIsOpen(!isOpen);
             }}
-          ></button>
-          <div>{value}</div>
-          <div className="h-[3000px] w-10 bg-red-600"></div>
+          ></div>
+        </div>
+        <div className="h-full w-full p-10">
+          <div className="grid h-full w-full grid-cols-5 gap-4">
+            {items.map((_, index) => (
+              <div className="flex flex-col gap-2">
+                <div className="flex-1">
+                  <img key={index} className="inset-0 h-full w-full rounded-lg object-fill" src={PATRICK_BATEMAN} />
+                </div>
+                <h2>
+                  <strong>Patrick Bateman</strong>
+                </h2>
+                <p className="opacity-80">Patrick Bateman is a character created by novelist Bret Easton Ellis.</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
   );
 }
+
+const PATRICK_BATEMAN = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuq6moo9Mj_OhWXMULwNzjw9vGPzMkpGWWMg&s";
 
 export default Test;

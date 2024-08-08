@@ -6,7 +6,7 @@ import { useFetch, usePostFetch } from "@/hooks/useFetch";
 import logo from "@assets/images/logo.svg";
 
 /* Types imports */
-import { SERVER_ADDRESS } from "@/utils/constants";
+import { API_ADRESS } from "@/utils/constants";
 import { DataTransfer } from "@/types/ApiResponse";
 import type UserData from "@/types/UserData";
 import SideBar from "@components/SideBar";
@@ -17,8 +17,8 @@ function HomePage() {
     name: "Jeff",
     email: "xdd@wp.pl",
   });
-  const response: DataTransfer<UserData> = useFetch<UserData>(SERVER_ADDRESS);
-  const post: DataTransfer<string> = usePostFetch(userData, SERVER_ADDRESS);
+  const response: DataTransfer<UserData> = useFetch<UserData>(API_ADRESS);
+  const post: DataTransfer<string> = usePostFetch(userData, API_ADRESS);
   const gowno = useAuth();
 
   useEffect(() => {
