@@ -20,6 +20,7 @@ const authReducer = (state: Auth, action: AuthReducer) => {
         ...state,
         isLoading: false,
         isAuthenticated: false,
+        isError: action.payload,
       };
     case AuthActions.SignOut:
       return {

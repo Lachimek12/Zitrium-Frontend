@@ -3,7 +3,7 @@ import { z } from "zod";
 
 const registerSchema = z
   .object({
-    userName: z
+    username: z
       .string()
       .min(1, { message: "User Name is required" })
       .min(3, { message: "User Name has to be at least 3 characters long" }),
@@ -25,12 +25,22 @@ const registerSchema = z
     path: ["confirmPassword"],
   });
 
+const loginSchema = z.object({
+  email: z.string().email({ message: "" }),
+  password: z.string().min(8, { message: "" }).max(30, { message: "" }),
+});
+
 type RegisterFormFields = z.infer<typeof registerSchema>;
+
+type LoginForm = {
+  email: string;
+  password: string;
+};
 
 type VerificationForm = {
   email: string;
   token: string;
 };
 
-export type { RegisterFormFields, VerificationForm };
-export { registerSchema };
+export type { RegisterFormFields, LoginForm, VerificationForm };
+export { registerSchema, loginSchema };

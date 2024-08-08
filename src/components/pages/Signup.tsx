@@ -13,6 +13,7 @@ import { ClosedEye, OpenedEye } from "@components/icons/eye";
 /* Types imports */
 import { RegisterFormFields, registerSchema } from "@/types/FormSchemas";
 import { removeSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/SessionStorage";
+import { SignUpInfo } from "@customTypes/Authentication";
 
 function Signup() {
   const {
@@ -26,7 +27,7 @@ function Signup() {
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
-  const [, setSignUpInfo] = useSessionStorage(SIGN_UP_INFO, "");
+  const [, setSignUpInfo] = useSessionStorage(SIGN_UP_INFO, {});
   const navigate = useNavigate();
 
   // Value removed if comming back from verification in order to route user correctly
@@ -42,12 +43,15 @@ function Signup() {
   };
 
   const onSubmit: SubmitHandler<RegisterFormFields> = async (data) => {
+    const { ["confirmPassword"]: b, ...postData } = data;
     console.log(data);
     axios
-      .post(REGISTER_ADDRESS, data)
+      .post(REGISTER_ADDRESS, postData)
       .then((response) => {
         console.log("Response: ", response);
-        setSignUpInfo(data.email);
+        setSignUpInfo({
+          email: data.email,
+        } as SignUpInfo);
         navigate("/verification");
       })
       .catch((error: AxiosError) => {
@@ -71,8 +75,8 @@ function Signup() {
           <p className="text-gray-500">Step 1/2</p>
         </div>
         <div className="flex flex-col gap-2">
-          <input {...register("userName")} type="text" placeholder="User Name" />
-          {errors.userName && <div className="text-red-500">{errors.userName.message}</div>}
+          <input {...register("username")} type="text" placeholder="User Name" />
+          {errors.username && <div className="text-red-500">{errors.username.message}</div>}
         </div>
         <div className="flex flex-col gap-2">
           <input {...register("email")} type="text" placeholder="Email" />
@@ -87,6 +91,7 @@ function Signup() {
               placeholder="Password"
             />
             <button
+              tabIndex={-1}
               type="button"
               className="exclude absolute inset-y-0 right-0 flex items-center rounded-md bg-transparent px-4 text-primary-500"
               onClick={togglePasswordVisibility}
@@ -105,6 +110,7 @@ function Signup() {
               placeholder="Confirm password"
             />
             <button
+              tabIndex={-1}
               type="button"
               className="exclude absolute inset-y-0 right-0 flex items-center rounded-md bg-transparent px-4 text-primary-500"
               onClick={toggleConfirmPasswordVisibility}
@@ -114,7 +120,7 @@ function Signup() {
           </div>
           {errors.confirmPassword && <div className="text-red-500">{errors.confirmPassword.message}</div>}
         </div>
-        <button className="mt-6" disabled={isSubmitting} type="submit">
+        <button className={`mt-6 ${isSubmitting && "hover:cursor-not-allowed"}`} disabled={isSubmitting} type="submit">
           {isSubmitting ? "...Loading" : "Submit"}
         </button>
         {errors.root && <div className="text-red-500">{errors.root.message}</div>}

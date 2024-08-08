@@ -26,3 +26,7 @@ export interface AuthReducer {
   type: AuthActions | "";
   payload: unknown;
 }
+
+export interface SignUpInfo {
+  email: string;
+}

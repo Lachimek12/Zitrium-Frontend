@@ -1,8 +1,11 @@
 /* Libraries */
 import { createContext, FC, memo, PropsWithChildren, useCallback, useContext, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
+import axios, { AxiosError } from "axios";
 
 /* App modules imports */
 import authReducer from "./AuthReducer";
+import { LOGOUT_ADDRESS } from "@utils/constants";
 
 /* Types imports */
 import { Auth, AuthActions, AuthReducer, LoginData } from "@/types/Authentication";
@@ -25,18 +28,16 @@ type AuthProviderProps = PropsWithChildren;
 
 const AuthProvider: FC<AuthProviderProps> = memo(({ children }) => {
   const [state, dispatch] = useReducer(authReducer, AuthInitialState);
+  //const navigate = useNavigate();
 
   const login = useCallback(async (data: LoginData) => {
-    dispatch({
-      type: AuthActions.SignIn_Request,
-    } as AuthReducer);
-
-    console.log(data);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    //dispatch({  type: AuthActions.SignIn_Request,} as AuthReducer);
 
     dispatch({
       type: AuthActions.SignIn_Success,
     } as AuthReducer);
+
+    //dispatch({ type: AuthActions.SignIn_Failure } as AuthReducer);
   }, []);
 
   const logout = useCallback(() => {
