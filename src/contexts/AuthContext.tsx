@@ -1,7 +1,7 @@
 /* Libraries */
 import { createContext, FC, memo, PropsWithChildren, useCallback, useContext, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 /* App modules imports */
 import authReducer from "./AuthReducer";
@@ -32,33 +32,36 @@ type AuthProviderProps = PropsWithChildren;
 const AuthProvider: FC<AuthProviderProps> = memo(({ children }) => {
   const [state, dispatch] = useReducer(authReducer, AuthInitialState);
   const [, setProfile] = useLocalStorage<Profile>(LOCAL_STORAGE_PROFILE_KEY, {
-    accessToken: "skibidi",
+    accessToken: "",
   } as Profile);
   const navigate = useNavigate();
 
-  const login = useCallback(async (data: LoginForm) => {
-    dispatch({ type: AuthActions.SignIn_Request } as AuthReducer);
+  const login = useCallback(
+    async (data: LoginForm) => {
+      dispatch({ type: AuthActions.SignIn_Request } as AuthReducer);
 
-    await API.post(LOGIN_ADDRESS, data)
-      .then((response) => {
-        const { token } = response.data;
-        console.log(response.data);
+      await API.post(LOGIN_ADDRESS, data)
+        .then((response) => {
+          const { token } = response.data;
+          console.log(response.data);
 
-        dispatch({
-          type: AuthActions.SignIn_Success,
-        } as AuthReducer);
+          dispatch({
+            type: AuthActions.SignIn_Success,
+          } as AuthReducer);
 
-        setProfile({
-          accessToken: token,
-        } as Profile);
+          setProfile({
+            accessToken: token,
+          } as Profile);
 
-        navigate("/");
-      })
-      .catch((error: AxiosError) => {
-        console.error(error);
-        dispatch({ type: AuthActions.SignIn_Failure, payload: error } as AuthReducer);
-      });
-  }, []);
+          navigate("/");
+        })
+        .catch((error: AxiosError) => {
+          console.error(error);
+          dispatch({ type: AuthActions.SignIn_Failure, payload: error } as AuthReducer);
+        });
+    },
+    [navigate, setProfile],
+  );
 
   const logout = useCallback(async () => {
     API.post(LOGOUT_ADDRESS)
@@ -86,4 +89,5 @@ function useAuth() {
   return context;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { AuthProvider, useAuth };
