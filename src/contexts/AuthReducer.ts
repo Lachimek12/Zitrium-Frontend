@@ -8,6 +8,7 @@ const authReducer = (state: Auth, action: AuthReducer) => {
         ...state,
         isLoading: true,
         isAuthenticated: false,
+        error: null,
       };
     case AuthActions.SignIn_Success:
       return {
@@ -20,13 +21,14 @@ const authReducer = (state: Auth, action: AuthReducer) => {
         ...state,
         isLoading: false,
         isAuthenticated: false,
-        isError: action.payload,
+        error: action.payload,
       };
     case AuthActions.SignOut:
       return {
         ...state,
         isLoading: false,
         isAuthenticated: false,
+        error: action.payload,
       };
     default:
       return {

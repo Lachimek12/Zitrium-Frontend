@@ -5,10 +5,13 @@ import axios, { AxiosError } from "axios";
 
 /* App modules imports */
 import authReducer from "./AuthReducer";
-import { LOGOUT_ADDRESS } from "@utils/constants";
+import API from "@/app/Api";
+import { LOCAL_STORAGE_PROFILE_KEY, LOGIN_ADDRESS, LOGOUT_ADDRESS } from "@utils/constants";
 
 /* Types imports */
-import { Auth, AuthActions, AuthReducer, LoginData } from "@/types/Authentication";
+import { Auth, AuthActions, AuthReducer, Profile } from "@/types/Authentication";
+import { LoginForm } from "@customTypes/FormSchemas";
+import { useLocalStorage } from "usehooks-ts";
 
 const AuthInitialState: Auth = {
   isLoading: false,
@@ -28,22 +31,46 @@ type AuthProviderProps = PropsWithChildren;
 
 const AuthProvider: FC<AuthProviderProps> = memo(({ children }) => {
   const [state, dispatch] = useReducer(authReducer, AuthInitialState);
-  //const navigate = useNavigate();
+  const [, setProfile] = useLocalStorage<Profile>(LOCAL_STORAGE_PROFILE_KEY, {
+    accessToken: "skibidi",
+  } as Profile);
+  const navigate = useNavigate();
 
-  const login = useCallback(async (data: LoginData) => {
-    //dispatch({  type: AuthActions.SignIn_Request,} as AuthReducer);
+  const login = useCallback(async (data: LoginForm) => {
+    dispatch({ type: AuthActions.SignIn_Request } as AuthReducer);
 
-    dispatch({
-      type: AuthActions.SignIn_Success,
-    } as AuthReducer);
+    await API.post(LOGIN_ADDRESS, data)
+      .then((response) => {
+        const { token } = response.data;
+        console.log(response.data);
 
-    //dispatch({ type: AuthActions.SignIn_Failure } as AuthReducer);
+        dispatch({
+          type: AuthActions.SignIn_Success,
+        } as AuthReducer);
+
+        setProfile({
+          accessToken: token,
+        } as Profile);
+
+        navigate("/");
+      })
+      .catch((error: AxiosError) => {
+        console.error(error);
+        dispatch({ type: AuthActions.SignIn_Failure, payload: error } as AuthReducer);
+      });
   }, []);
 
-  const logout = useCallback(() => {
-    dispatch({
-      type: AuthActions.SignOut,
-    } as AuthReducer);
+  const logout = useCallback(async () => {
+    API.post(LOGOUT_ADDRESS)
+      .then(() => {
+        dispatch({ type: AuthActions.SignOut, payload: null } as AuthReducer);
+      })
+      .catch((error) => {
+        dispatch({ type: AuthActions.SignOut, payload: error } as AuthReducer);
+      })
+      .finally(() => {
+        localStorage.removeItem(LOCAL_STORAGE_PROFILE_KEY);
+      });
   }, []);
 
   return <AuthContext.Provider value={{ ...state, login, logout }}>{children}</AuthContext.Provider>;

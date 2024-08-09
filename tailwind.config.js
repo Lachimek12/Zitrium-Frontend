@@ -15,9 +15,16 @@ export const theme = {
         700: "#434956",
         800: "#2c313a",
       },
-      gray: {
+      faint: {
         300: "#f8f9fa",
         400: "#adb5bd",
+        500: "#6b7280",
+      },
+      error: {
+        500: "#ef4444",
+      },
+      highlight: {
+        400: "#38bdf8",
       },
     },
     dropShadow: {

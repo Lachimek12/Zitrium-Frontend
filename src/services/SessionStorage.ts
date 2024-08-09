@@ -20,8 +20,6 @@ function existSessionStorageItem(key: string) {
   return item !== null;
 }
 
-function useSessionStorageItem<T>(key: string, initialValue: T): [T, (value: T) => void] {}
-
 /**
  * Session key used for registration and verification
  */

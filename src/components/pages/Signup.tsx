@@ -72,15 +72,15 @@ function Signup() {
       >
         <div className="flex justify-between">
           <h1 className="mb-6 text-5xl">Sign Up</h1>
-          <p className="text-gray-500">Step 1/2</p>
+          <p className="text-faint-500">Step 1/2</p>
         </div>
         <div className="flex flex-col gap-2">
           <input {...register("username")} type="text" placeholder="User Name" />
-          {errors.username && <div className="text-red-500">{errors.username.message}</div>}
+          {errors.username && <div className="text-error-500">{errors.username.message}</div>}
         </div>
         <div className="flex flex-col gap-2">
           <input {...register("email")} type="text" placeholder="Email" />
-          {errors.email && <div className="text-red-500">{errors.email.message}</div>}
+          {errors.email && <div className="text-error-500">{errors.email.message}</div>}
         </div>
         <div className="flex flex-col gap-2">
           <div className="relative w-full">
@@ -99,7 +99,7 @@ function Signup() {
               {isPasswordVisible ? <OpenedEye /> : <ClosedEye />}
             </button>
           </div>
-          {errors.password && <div className="text-red-500">{errors.password.message}</div>}
+          {errors.password && <div className="text-error-500">{errors.password.message}</div>}
         </div>
         <div className="flex flex-col gap-2">
           <div className="relative w-full">
@@ -118,12 +118,12 @@ function Signup() {
               {isConfirmPasswordVisible ? <OpenedEye /> : <ClosedEye />}
             </button>
           </div>
-          {errors.confirmPassword && <div className="text-red-500">{errors.confirmPassword.message}</div>}
+          {errors.confirmPassword && <div className="text-error-500">{errors.confirmPassword.message}</div>}
         </div>
         <button className={`mt-6 ${isSubmitting && "hover:cursor-not-allowed"}`} disabled={isSubmitting} type="submit">
           {isSubmitting ? "...Loading" : "Submit"}
         </button>
-        {errors.root && <div className="text-red-500">{errors.root.message}</div>}
+        {errors.root && <div className="text-error-500">{errors.root.message}</div>}
       </form>
     </div>
   );
