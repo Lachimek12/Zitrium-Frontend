@@ -1,5 +1,5 @@
 /* Types imports */
-import { Auth, AuthActions, AuthReducer } from "@/types/Authentication";
+import { Auth, AuthActions, AuthReducer } from "@customTypes/authentication";
 
 const authReducer = (state: Auth, action: AuthReducer) => {
   switch (action.type) {
@@ -29,6 +29,12 @@ const authReducer = (state: Auth, action: AuthReducer) => {
         isLoading: false,
         isAuthenticated: false,
         error: action.payload,
+      };
+    case AuthActions.SetUserProfile:
+      return {
+        ...state,
+        isLoading: false,
+        isAuthenticated: true,
       };
     default:
       return {

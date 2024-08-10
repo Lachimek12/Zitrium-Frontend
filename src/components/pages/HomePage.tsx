@@ -7,10 +7,10 @@ import logo from "@assets/images/logo.svg";
 
 /* Types imports */
 import { API_ADRESS } from "@/utils/constants";
-import { DataTransfer } from "@/types/ApiResponse";
+import { DataTransfer } from "@customTypes/apiResponse";
 import type UserData from "@/types/UserData";
 import SideBar from "@components/SideBar";
-import API from "@/app/Api";
+import API from "@/app/api";
 
 function HomePage() {
   const [userData] = useState<UserData>({

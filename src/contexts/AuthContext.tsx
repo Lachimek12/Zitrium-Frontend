@@ -1,16 +1,16 @@
 /* Libraries */
-import { createContext, FC, memo, PropsWithChildren, useCallback, useContext, useReducer } from "react";
+import { createContext, FC, memo, PropsWithChildren, useCallback, useContext, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 
 /* App modules imports */
-import authReducer from "./AuthReducer";
-import API from "@/app/Api";
+import authReducer from "./authReducer";
+import API from "@/app/api";
 import { LOCAL_STORAGE_PROFILE_KEY, LOGIN_ADDRESS, LOGOUT_ADDRESS } from "@utils/constants";
 
 /* Types imports */
-import { Auth, AuthActions, AuthReducer, Profile } from "@/types/Authentication";
-import { LoginForm } from "@customTypes/FormSchemas";
+import { Auth, AuthActions, AuthReducer, Profile } from "@customTypes/authentication";
+import { LoginForm } from "@customTypes/formSchemas";
 import { useLocalStorage } from "usehooks-ts";
 
 const AuthInitialState: Auth = {
@@ -36,6 +36,10 @@ const AuthProvider: FC<AuthProviderProps> = memo(({ children }) => {
   } as Profile);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    initializeAuth(dispatch);
+  }, []);
+
   const login = useCallback(
     async (data: LoginForm) => {
       dispatch({ type: AuthActions.SignIn_Request } as AuthReducer);
@@ -43,7 +47,6 @@ const AuthProvider: FC<AuthProviderProps> = memo(({ children }) => {
       await API.post(LOGIN_ADDRESS, data)
         .then((response) => {
           const { token } = response.data;
-          console.log(response.data);
 
           dispatch({
             type: AuthActions.SignIn_Success,
@@ -56,7 +59,6 @@ const AuthProvider: FC<AuthProviderProps> = memo(({ children }) => {
           navigate("/");
         })
         .catch((error: AxiosError) => {
-          console.error(error);
           dispatch({ type: AuthActions.SignIn_Failure, payload: error } as AuthReducer);
         });
     },
@@ -87,6 +89,13 @@ function useAuth() {
   }
 
   return context;
+}
+
+async function initializeAuth(dispatch: React.Dispatch<AuthReducer>) {
+  const accessToken = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROFILE_KEY)!)?.accessToken;
+  if (accessToken) {
+    dispatch({ type: AuthActions.SetUserProfile } as AuthReducer);
+  }
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

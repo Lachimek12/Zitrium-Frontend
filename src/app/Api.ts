@@ -2,7 +2,7 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
 
 /* App modules imports */
-import { LOCAL_STORAGE_PROFILE_KEY, SERVER_ADDRESS } from "@utils/constants";
+import { LOCAL_STORAGE_PROFILE_KEY, BASE_URL } from "@utils/constants";
 
 function authInterceptor(req: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
   const profile = localStorage.getItem(LOCAL_STORAGE_PROFILE_KEY);
@@ -15,7 +15,7 @@ function authInterceptor(req: InternalAxiosRequestConfig): InternalAxiosRequestC
 }
 
 const API = axios.create({
-  baseURL: SERVER_ADDRESS,
+  baseURL: BASE_URL,
 });
 
 API.interceptors.request.use(authInterceptor);

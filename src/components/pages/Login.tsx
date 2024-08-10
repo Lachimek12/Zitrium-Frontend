@@ -6,8 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 
 /* Types imports */
-import { ClosedEye, OpenedEye } from "@components/icons/eye";
-import { LoginForm, loginSchema } from "@customTypes/FormSchemas";
+import { ClosedEye, OpenedEye } from "@components/icons/Eye";
+import { LoginForm, loginSchema } from "@customTypes/formSchemas";
 import { useAuth } from "@contexts/AuthContext";
 
 function Login() {
@@ -34,7 +34,7 @@ function Login() {
   useEffect(() => {
     if (authContext.error) {
       const error = authContext.error as AxiosError;
-      console.error("Error: ", error);
+
       if (error.response) {
         setError("root", { message: error.response.data as string });
       } else {
@@ -50,19 +50,20 @@ function Login() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1 className="mb-6 text-5xl">Sign In</h1>
-        <input type="text" placeholder="email" {...register("email")} />
+        <input type="text" maxLength={50} placeholder="email" {...register("email")} />
         <div className="relative">
           <input
-            className="w-full"
             type={isPasswordVisible ? "text" : "password"}
+            maxLength={30}
             placeholder="Password"
+            className="w-full"
             {...register("password")}
           />
           <button
-            tabIndex={-1}
             type="button"
             className="exclude absolute inset-y-0 right-0 flex items-center rounded-md bg-transparent px-4 text-primary-500 opacity-50 hover:opacity-100"
             onClick={togglePasswordVisibility}
+            tabIndex={-1}
           >
             {isPasswordVisible ? <OpenedEye /> : <ClosedEye />}
           </button>
@@ -72,8 +73,8 @@ function Login() {
         </button>
         {errors.root && <div className="text-error-500">{errors.root.message}</div>}
         <div className="inline-flex w-full items-center justify-center">
-          <hr className="bg-faint-500 my-8 h-px w-full border-0" />
-          <span className="text-faint-500 absolute left-1/2 -translate-x-1/2 bg-background-800 px-3 font-medium">
+          <hr className="my-8 h-px w-full border-0 bg-faint-500" />
+          <span className="absolute left-1/2 -translate-x-1/2 bg-background-800 px-3 font-medium text-faint-500">
             or
           </span>
         </div>

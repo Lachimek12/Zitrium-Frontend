@@ -13,7 +13,7 @@ function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   useEffect(() => {
     if (isAuthenticated === false) {
-      navigate("/register", { replace: true });
+      navigate("/login", { replace: true });
     }
   }, [navigate, isAuthenticated]);
 

@@ -6,7 +6,8 @@ const registerSchema = z
     username: z
       .string()
       .min(1, { message: "User Name is required" })
-      .min(3, { message: "User Name has to be at least 3 characters long" }),
+      .min(3, { message: "User Name has to be at least 3 characters long" })
+      .max(20, { message: "User Name cannot be longer than 20 characters long" }),
     email: z.string().min(1, { message: "Email is required" }).email({ message: "Invalid email adress" }),
     password: z
       .string()
@@ -26,8 +27,11 @@ const registerSchema = z
   });
 
 const loginSchema = z.object({
-  email: z.string().email({ message: "" }),
-  password: z.string().min(8, { message: "" }).max(30, { message: "" }),
+  email: z.string().email({ message: "Invalid email adress" }),
+  password: z
+    .string()
+    .min(8, { message: "Password has to be at least 8 characters long" })
+    .max(30, { message: "Password has to be under 30 characters long" }),
 });
 
 type RegisterFormFields = z.infer<typeof registerSchema>;

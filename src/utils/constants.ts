@@ -1,5 +1,5 @@
 /* Adresses */
-export const SERVER_ADDRESS: string = import.meta.env.VITE_SERVER_ADDRESS || "";
+export const BASE_URL: string = import.meta.env.VITE_SERVER_ADDRESS || "";
 export const API_ADRESS: string = "/api";
 
 /* Authentication Adresses */

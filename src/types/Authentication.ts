@@ -1,5 +1,5 @@
 /* App modules imports */
-import { LoginForm } from "./FormSchemas";
+import { LoginForm } from "./formSchemas";
 
 export type User = {
   name: string;
@@ -20,6 +20,7 @@ export enum AuthActions {
   SignIn_Success = "SIGN_IN_SUCCESS",
   SignIn_Failure = "SIGN_IN_FAILURE",
   SignOut = "SIGN_OUT",
+  SetUserProfile = "SET_USER_PROFILE",
 }
 
 export interface AuthReducer {

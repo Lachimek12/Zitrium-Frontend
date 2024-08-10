@@ -10,18 +10,18 @@ import axios, { AxiosError } from "axios";
 /* App modules imports */
 import styles from "./Verification.module.css";
 import { getNextDate } from "@utils/time";
-import { removeSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/SessionStorage";
+import { removeSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/sessionStorage";
 import { useAuth } from "@contexts/AuthContext";
 import {
   VERIFICATION_CODE_EXPIRATION_TIMEOUT,
   VERIFY_EMAIL_ADDRESS,
   RESEND_VERIFICATION_ADDRESS,
-  LOCAL_STORAGE_PROFILE_KEY,
+  BASE_URL,
 } from "@utils/constants";
 
 /* Types imports */
-import { VerificationForm } from "@/types/FormSchemas";
-import { SignUpInfo } from "@customTypes/Authentication";
+import { VerificationForm } from "@customTypes/formSchemas";
+import { SignUpInfo } from "@customTypes/authentication";
 
 function Verification() {
   /* register */
@@ -50,12 +50,11 @@ function Verification() {
   }, []);
 
   const onSubmit: SubmitHandler<VerificationForm> = async (data) => {
-    console.log(data);
     /* Required due to input field inability to dynamicly modify token value with small concise code */
     data.token = token;
     axios
-      .post(VERIFY_EMAIL_ADDRESS, data)
-      .then((response) => {
+      .post(BASE_URL + VERIFY_EMAIL_ADDRESS, data)
+      .then(() => {
         authContext.logout(); // Remove old user
 
         removeSessionStorageItem(SIGN_UP_INFO); // Value removed in order to make
@@ -64,7 +63,6 @@ function Verification() {
         navigate("/login");
       })
       .catch((error: AxiosError) => {
-        console.error("Error: ", error);
         if (error.response) {
           setError("root", { message: error.response.data as string });
         } else {
@@ -76,14 +74,13 @@ function Verification() {
   const resendCode = async () => {
     setError("root", { message: "" });
     axios
-      .post(RESEND_VERIFICATION_ADDRESS, signUpInfo)
+      .post(BASE_URL + RESEND_VERIFICATION_ADDRESS, signUpInfo)
       .then(() => {
         const expireDate = getNextDate(new Date(), VERIFICATION_CODE_EXPIRATION_TIMEOUT);
         setExpirationTime(expireDate.getTime());
         restart(expireDate);
       })
       .catch((error: AxiosError) => {
-        console.error("Error: ", error);
         if (error.response) {
           setError("root", { message: error.response.data as string });
         } else {
@@ -123,7 +120,7 @@ function Verification() {
             {minutes == 0 && seconds == 0 ? (
               <div className="flex gap-2">
                 <span>Code expired.</span>
-                <span className="text-highlight-400 cursor-pointer hover:underline" onClick={resendCode}>
+                <span className="cursor-pointer text-highlight-400 hover:underline" onClick={resendCode}>
                   {" "}
                   Resend
                 </span>
@@ -145,7 +142,7 @@ function Verification() {
           </button>
           <p className="self-center">
             Can't find the email? Click{" "}
-            <span className="text-highlight-400 cursor-pointer hover:underline" onClick={resendCode}>
+            <span className="cursor-pointer text-highlight-400 hover:underline" onClick={resendCode}>
               here
             </span>{" "}
             to resend
