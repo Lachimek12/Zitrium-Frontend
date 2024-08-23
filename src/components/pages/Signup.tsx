@@ -23,6 +23,7 @@ function Signup() {
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormFields>({
     resolver: zodResolver(registerSchema),
+    mode: "onChange",
   });
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -49,6 +50,7 @@ function Signup() {
         setSignUpInfo({
           email: data.email,
         } as SignUpInfo);
+
         navigate("/verification");
       })
       .catch((error: AxiosError) => {

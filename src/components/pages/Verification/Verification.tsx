@@ -13,7 +13,7 @@ import { getNextDate } from "@utils/time";
 import { removeSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/sessionStorage";
 import { useAuth } from "@contexts/AuthContext";
 import {
-  VERIFICATION_CODE_EXPIRATION_TIMEOUT,
+  VERIFICATION_CODE_EXPIRATION_TIMEOUT_SEC,
   VERIFY_EMAIL_ADDRESS,
   RESEND_VERIFICATION_ADDRESS,
   BASE_URL,
@@ -37,7 +37,7 @@ function Verification() {
   /* timer */
   const [expirationTime, setExpirationTime] = useSessionStorage<number>(
     TIMEOUT,
-    getNextDate(new Date(), VERIFICATION_CODE_EXPIRATION_TIMEOUT).getTime(),
+    getNextDate(new Date(), VERIFICATION_CODE_EXPIRATION_TIMEOUT_SEC).getTime(),
   );
   const { seconds, minutes, restart } = useTimer({ expiryTimestamp: new Date(expirationTime) });
 
@@ -76,7 +76,7 @@ function Verification() {
     axios
       .post(BASE_URL + RESEND_VERIFICATION_ADDRESS, signUpInfo)
       .then(() => {
-        const expireDate = getNextDate(new Date(), VERIFICATION_CODE_EXPIRATION_TIMEOUT);
+        const expireDate = getNextDate(new Date(), VERIFICATION_CODE_EXPIRATION_TIMEOUT_SEC);
         setExpirationTime(expireDate.getTime());
         restart(expireDate);
       })
@@ -141,10 +141,10 @@ function Verification() {
             {isSubmitting ? "...Loading" : "Verify"}
           </button>
           <p className="self-center">
-            Can't find the email? Click{" "}
+            Can't find the email? Click
             <span className="cursor-pointer text-highlight-400 hover:underline" onClick={resendCode}>
-              here
-            </span>{" "}
+              {" here "}
+            </span>
             to resend
           </p>
         </div>
