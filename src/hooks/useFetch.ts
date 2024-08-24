@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 /* Types imports */
-import { DataTransfer } from "@customTypes/apiResponse";
+import { DataTransfer } from "@customTypes/ApiResponse";
 
 async function parseData(response: Response): Promise<unknown> {
   const contentType: string | null = response.headers.get("content-type");

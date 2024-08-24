@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 
 /* App modules imports */
-import authReducer from "./authReducer";
-import API from "@/app/api";
+import authReducer from "./AuthReducer";
+import API from "@/app/Api";
 import { LOCAL_STORAGE_PROFILE_KEY, LOGIN_ADDRESS, LOGOUT_ADDRESS } from "@utils/constants";
 
 /* Types imports */
-import { Auth, AuthActions, AuthReducer, Profile } from "@customTypes/authentication";
-import { LoginForm } from "@customTypes/formSchemas";
+import { Auth, AuthActions, AuthReducer, Profile } from "@customTypes/Authentication";
+import { LoginForm } from "@customTypes/FormSchemas";
 import { useLocalStorage } from "usehooks-ts";
 
 const AuthInitialState: Auth = {

@@ -8,12 +8,12 @@ import axios, { AxiosError } from "axios";
 
 /* App modules imports */
 import { BASE_URL, REGISTER_ADDRESS } from "@utils/constants";
-import { ClosedEye, OpenedEye } from "@components/icons/Eye";
+import { ClosedEye, OpenedEye } from "@components/icons/eye";
 
 /* Types imports */
-import { RegisterFormFields, registerSchema } from "@customTypes/formSchemas";
-import { removeSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/sessionStorage";
-import { SignUpInfo } from "@/types/authentication";
+import { RegisterFormFields, registerSchema } from "@customTypes/FormSchemas";
+import { removeSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/SessionStorage";
+import { SignUpInfo } from "@/types/Authentication";
 
 function Signup() {
   const {

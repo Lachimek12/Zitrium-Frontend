@@ -6,8 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 
 /* Types imports */
-import { ClosedEye, OpenedEye } from "@components/icons/Eye";
-import { LoginForm, loginSchema } from "@customTypes/formSchemas";
+import { ClosedEye, OpenedEye } from "@components/icons/eye";
+import { LoginForm, loginSchema } from "@customTypes/FormSchemas";
 import { useAuth } from "@contexts/AuthContext";
 
 function Login() {

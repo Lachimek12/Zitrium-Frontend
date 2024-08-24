@@ -3,7 +3,7 @@ import { PropsWithChildren, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 /* App modules imports */
-import { existSessionStorageItem, SIGN_UP_INFO } from "@/services/sessionStorage";
+import { existSessionStorageItem, SIGN_UP_INFO } from "@/services/SessionStorage";
 
 type VerificationRouteProps = PropsWithChildren;
 

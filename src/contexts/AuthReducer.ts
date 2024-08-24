@@ -1,5 +1,5 @@
 /* Types imports */
-import { Auth, AuthActions, AuthReducer } from "@customTypes/authentication";
+import { Auth, AuthActions, AuthReducer } from "@customTypes/Authentication";
 
 const authReducer = (state: Auth, action: AuthReducer) => {
   switch (action.type) {

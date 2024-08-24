@@ -10,7 +10,7 @@ import axios, { AxiosError } from "axios";
 /* App modules imports */
 import styles from "./Verification.module.css";
 import { getNextDate } from "@utils/time";
-import { removeSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/sessionStorage";
+import { removeSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/SessionStorage";
 import { useAuth } from "@contexts/AuthContext";
 import {
   VERIFICATION_CODE_EXPIRATION_TIMEOUT_SEC,
@@ -20,8 +20,8 @@ import {
 } from "@utils/constants";
 
 /* Types imports */
-import { VerificationForm } from "@customTypes/formSchemas";
-import { SignUpInfo } from "@customTypes/authentication";
+import { VerificationForm } from "@customTypes/FormSchemas";
+import { SignUpInfo } from "@customTypes/Authentication";
 
 function Verification() {
   /* register */
