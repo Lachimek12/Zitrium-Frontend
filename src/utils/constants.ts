@@ -14,3 +14,4 @@ export const LOCAL_STORAGE_PROFILE_KEY = "profile";
 
 /* Other */
 export const VERIFICATION_CODE_EXPIRATION_TIMEOUT_SEC = 600;
+export const USER_TOKEN_EXPIRATION_TIMEOUT_MS = 1000 * 60 * 60 * 24 * 14; // 2 weeks

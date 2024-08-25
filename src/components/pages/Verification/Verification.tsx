@@ -32,7 +32,7 @@ function Verification() {
     formState: { errors, isSubmitting },
   } = useForm<VerificationForm>();
   const [signUpInfo] = useSessionStorage<SignUpInfo>(SIGN_UP_INFO, { email: "" });
-  const [token, setToken] = useState("");
+  const [code, setCode] = useState("");
 
   /* timer */
   const [expirationTime, setExpirationTime] = useSessionStorage<number>(
@@ -50,8 +50,8 @@ function Verification() {
   }, []);
 
   const onSubmit: SubmitHandler<VerificationForm> = async (data) => {
-    /* Required due to input field inability to dynamicly modify token value with small concise code */
-    data.token = token;
+    /* Required due to input field inability to dynamicly modify verification code value with small concise code */
+    data.code = code;
     axios
       .post(BASE_URL + VERIFY_EMAIL_ADDRESS, data)
       .then(() => {
@@ -91,7 +91,7 @@ function Verification() {
 
   return (
     <div className="flex h-full justify-center align-middle">
-      <p>{token}</p>
+      <p>{code}</p>
       <form
         className="relative top-[25%] flex h-max w-[20%] flex-col gap-6 p-6 shadow-2xl"
         onSubmit={handleSubmit(onSubmit)}
@@ -107,7 +107,7 @@ function Verification() {
           <div className="flex justify-center">
             <VerificationInput
               onChange={(input: string) => {
-                setToken(input);
+                setCode(input);
               }}
               classNames={{
                 character: styles.character,
@@ -134,8 +134,8 @@ function Verification() {
         </div>
         <div className="flex flex-col gap-2">
           <button
-            className={`mt-6 ${(isSubmitting || token.length != 6) && "hover:cursor-not-allowed"}`}
-            disabled={isSubmitting || token.length != 6}
+            className={`mt-6 ${(isSubmitting || code.length != 6) && "hover:cursor-not-allowed"}`}
+            disabled={isSubmitting || code.length != 6}
             type="submit"
           >
             {isSubmitting ? "...Loading" : "Verify"}
@@ -148,7 +148,7 @@ function Verification() {
             to resend
           </p>
         </div>
-        <input type="hidden" {...register("token")} />
+        <input type="hidden" {...register("code")} />
         <input type="hidden" value={signUpInfo.email} {...register("email")} />
         {errors.root && <div className="text-error-500">{errors.root.message}</div>}
       </form>

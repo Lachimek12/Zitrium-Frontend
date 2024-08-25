@@ -44,4 +44,5 @@ export interface SignUpInfo {
  */
 export interface Profile {
   accessToken: string;
+  expiryDate: number;
 }

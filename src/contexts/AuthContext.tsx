@@ -1,12 +1,17 @@
 /* Libraries */
 import { createContext, FC, memo, PropsWithChildren, useCallback, useContext, useEffect, useReducer } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 
 /* App modules imports */
 import authReducer from "./AuthReducer";
 import API from "@/app/Api";
-import { LOCAL_STORAGE_PROFILE_KEY, LOGIN_ADDRESS, LOGOUT_ADDRESS } from "@utils/constants";
+import {
+  LOCAL_STORAGE_PROFILE_KEY,
+  LOGIN_ADDRESS,
+  LOGOUT_ADDRESS,
+  USER_TOKEN_EXPIRATION_TIMEOUT_MS,
+} from "@utils/constants";
 
 /* Types imports */
 import { Auth, AuthActions, AuthReducer, Profile } from "@customTypes/Authentication";
@@ -54,6 +59,7 @@ const AuthProvider: FC<AuthProviderProps> = memo(({ children }) => {
 
           setProfile({
             accessToken: token,
+            expiryDate: Date.now() + USER_TOKEN_EXPIRATION_TIMEOUT_MS,
           } as Profile);
 
           navigate("/");
@@ -71,7 +77,9 @@ const AuthProvider: FC<AuthProviderProps> = memo(({ children }) => {
         dispatch({ type: AuthActions.SignOut, payload: null } as AuthReducer);
       })
       .catch((error) => {
-        dispatch({ type: AuthActions.SignOut, payload: error } as AuthReducer);
+        if (!checkForAuthError(error, dispatch, navigate)) {
+          dispatch({ type: AuthActions.SignOut, payload: error } as AuthReducer);
+        }
       })
       .finally(() => {
         localStorage.removeItem(LOCAL_STORAGE_PROFILE_KEY);
@@ -93,9 +101,29 @@ function useAuth() {
 
 async function initializeAuth(dispatch: React.Dispatch<AuthReducer>) {
   const accessToken = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROFILE_KEY)!)?.accessToken;
-  if (accessToken) {
+  const expiryDate = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROFILE_KEY)!)?.expiryDate;
+
+  if (accessToken && expiryDate && Date.now() < expiryDate) {
     dispatch({ type: AuthActions.SetUserProfile } as AuthReducer);
+  } else if (expiryDate && Date.now() >= expiryDate) {
+    localStorage.removeItem(LOCAL_STORAGE_PROFILE_KEY);
   }
+}
+
+function checkForAuthError(
+  error: AxiosError,
+  dispatch: React.Dispatch<AuthReducer>,
+  navigate: NavigateFunction,
+): boolean {
+  // 401 - authentication error
+  if (error.response!.status === 401) {
+    localStorage.removeItem(LOCAL_STORAGE_PROFILE_KEY);
+    dispatch({ type: AuthActions.SignOut, payload: error } as AuthReducer);
+    navigate("/login");
+    return true;
+  }
+
+  return false;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

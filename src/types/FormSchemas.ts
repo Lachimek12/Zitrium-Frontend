@@ -40,7 +40,7 @@ type LoginForm = {
 
 type VerificationForm = {
   email: string;
-  token: string;
+  code: string;
 };
 
 export type { RegisterFormFields, LoginForm, VerificationForm };
