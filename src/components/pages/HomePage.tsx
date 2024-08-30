@@ -11,8 +11,16 @@ import { DataTransfer } from "@customTypes/ApiResponse";
 import type UserData from "@/types/UserData";
 import SideBar from "@components/SideBar";
 import API from "@/app/Api";
+import { useSessionStorage } from "usehooks-ts";
+import { SimulatorData } from "@customTypes/Simulator";
+import { SIMULATION_DATA } from "@/services/SessionStorage";
+import { nextTurn, simulatorInitialState } from "@utils/simulator";
 
 function HomePage() {
+  const [simulatorData, setSimulatorData] = useSessionStorage<SimulatorData>(SIMULATION_DATA, simulatorInitialState);
+
+  // OLD STUFF
+
   const [userData] = useState<UserData>({
     name: "Jeff",
     email: "xdd@wp.pl",
@@ -34,6 +42,7 @@ function HomePage() {
 
   const handleReceiveButton = async () => {
     response.request();
+    nextTurn(simulatorData, setSimulatorData);
   };
 
   const handleSendButton = async () => {
@@ -42,7 +51,10 @@ function HomePage() {
     });
     post.request();
     console.log("skibidi");
+    console.log(simulatorData.isGameOver);
   };
+
+  // END OF OLD STUFF
 
   return (
     <div className="relative flex flex-grow">

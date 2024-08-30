@@ -26,5 +26,6 @@ function existSessionStorageItem(key: string) {
 
 export const SIGN_UP_INFO = "signUpInfo";
 export const TIMEOUT = "timeout";
+export const SIMULATION_DATA = "simulationData";
 
 export { removeSessionStorageItem, getSessionStorageItem, existSessionStorageItem };
