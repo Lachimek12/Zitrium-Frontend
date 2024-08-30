@@ -15,6 +15,8 @@ type DragDropPrompts = {
 function DragDrop({ setUrl }: DragDropPrompts) {
   const handleDrop = (acceptedFiles: File[]) => {
     acceptedFiles.forEach((file) => {
+      console.log("skibidi");
+      console.log(file);
       const url = URL.createObjectURL(file);
       setUrl(url);
     });
@@ -22,8 +24,8 @@ function DragDrop({ setUrl }: DragDropPrompts) {
 
   return (
     <Dropzone onDrop={handleDrop} multiple={false}>
-      {({ getRootProps, getInputProps, isDragActive, isDragAccept }) => (
-        <div className={`flex h-[100px] w-[100px] hover:cursor-pointer hover:opacity-80`} {...getRootProps()}>
+      {({ getRootProps, getInputProps }) => (
+        <div className={`flex flex-1 hover:cursor-pointer hover:opacity-80`} {...getRootProps()}>
           <input className="flex-1" {...getInputProps()} />
         </div>
       )}
@@ -36,14 +38,14 @@ function Tile() {
 
   return (
     <div className="relative flex flex-1 overflow-clip">
-      <div className="m-0 flex flex-1 p-0 hover:opacity-50">
-        <div className="absolute h-[100%] w-[100%]">
+      <div className="group m-0 flex flex-1 p-0">
+        <div className="flex flex-1 ring-red-800 hover:ring-8">
           <DragDrop setUrl={setImageUrl} />
         </div>
         <div className="pointer-events-none absolute left-[50%] top-[50%] flex -translate-x-[50%] -translate-y-[50%]">
           <AddImageIcon />
         </div>
-        <div className="absolute flex h-[100%] w-[100%] object-contain hover:hidden">
+        <div className={`pointer-events-none absolute flex h-[100%] w-[100%] object-contain group-hover:opacity-20`}>
           <img className="flex-1 rounded-lg" src={imageUrl ? imageUrl : ""} />
         </div>
       </div>
