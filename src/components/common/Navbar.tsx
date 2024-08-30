@@ -13,7 +13,7 @@ function Navbar() {
   return (
     // border-b-2 border-[#162022]
     <>
-      <div className={`flex h-24 w-full flex-none ${styles.backgroundImage} `}>
+      <div className={`flex h-20 w-full flex-none ${styles.backgroundImage} `}>
         <div className="flex flex-1 flex-row-reverse gap-6 bg-[#232E30] px-6 py-2 opacity-80">
           <ProfileFrame
             image={SIGMA_SRC}

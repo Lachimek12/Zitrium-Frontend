@@ -22,8 +22,8 @@ function DragDrop({ setUrl }: DragDropPrompts) {
 
   return (
     <Dropzone onDrop={handleDrop} multiple={false}>
-      {({ getRootProps, getInputProps, isDragActive, isDragAccept }) => (
-        <div className={`flex h-[100px] w-[100px] hover:cursor-pointer hover:opacity-80`} {...getRootProps()}>
+      {({ getRootProps, getInputProps }) => (
+        <div className={`flex flex-1 hover:cursor-pointer hover:opacity-80`} {...getRootProps()}>
           <input className="flex-1" {...getInputProps()} />
         </div>
       )}
@@ -36,14 +36,14 @@ function Tile() {
 
   return (
     <div className="relative flex flex-1 overflow-clip">
-      <div className="m-0 flex flex-1 p-0 hover:opacity-50">
-        <div className="absolute h-[100%] w-[100%]">
+      <div className="group m-0 flex flex-1 p-0 hover:cursor-pointer hover:opacity-50">
+        <div className="flex flex-1 ring-red-800 hover:ring-8">
           <DragDrop setUrl={setImageUrl} />
         </div>
         <div className="pointer-events-none absolute left-[50%] top-[50%] flex -translate-x-[50%] -translate-y-[50%]">
           <AddImageIcon />
         </div>
-        <div className="absolute flex h-[100%] w-[100%] object-contain hover:hidden">
+        <div className="pointer-events-none absolute flex h-[100%] w-[100%] object-contain group-hover:opacity-10">
           <img className="flex-1 rounded-lg" src={imageUrl ? imageUrl : ""} />
         </div>
       </div>
@@ -71,14 +71,16 @@ function PlusSymbol() {
 
 function Test() {
   return (
-    <div className={`${styles.backgroundImage} flex h-full bg-cover`}>
-      <div className="flex flex-1 justify-center bg-background2-900 bg-opacity-90">
-        <div className="grid grid-cols-6 grid-rows-6 gap-4">
-          {Array.from({ length: 8 }).map((_, index) => (
-            <div className="flex h-[120px] w-[100px] rounded-lg bg-primary2-800">
-              <Tile />
-            </div>
-          ))}
+    <div className="min-h-full flex-col">
+      <div className={`${styles.backgroundImage} flex min-h-full bg-cover`}>
+        <div className="flex flex-1 items-start justify-center bg-background2-900 bg-opacity-90">
+          <div className="mt-6 grid grid-cols-6 gap-x-6 gap-y-16">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <div key={index} className="flex h-[120px] w-[100px] rounded-lg bg-primary2-800">
+                <Tile />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
