@@ -1,0 +1,13 @@
+.backgroundImage {
+  background-image: url("../../assets/images/navbar_texture.png");
+  background-position: center;
+  background-size: 100% 600%;
+  background-repeat: no-repeat;
+}
+
+.deviderImage {
+  background-image: url("../../assets/images/devider_texture.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

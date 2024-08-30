@@ -26,10 +26,28 @@ export const theme = {
       highlight: {
         400: "#38bdf8",
       },
+      background2: {
+        800: "#21292e",
+        900: "#0e161b",
+      },
+      primary2: {
+        900: "#162022",
+        800: "#293334",
+      },
+      secondary2: {
+        500: "#232e30",
+        400: "#314048",
+      },
+      border: {
+        700: "#69797d",
+      },
     },
-    dropShadow: {
-      "3xl": "0 35px 35px rgba(0, 0, 0, 0.25)",
-      "4xl": ["0 35px 35px rgba(0, 0, 0, 0.25)", "0 45px 65px rgba(0, 0, 0, 0.15)"],
+    boxShadow: {
+      "3xl": "0 0 14px 7px rgba(0, 0, 0, 1)",
+      "3xl-hover": "0 0 14px 7px rgba(86, 102, 111, 1)",
+    },
+    fontFamily: {
+      fantasy: ["MainFont", "sans-serif"],
     },
   },
 };
