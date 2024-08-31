@@ -1,20 +1,20 @@
 /* Libraries */
 import { useState, useEffect } from "react";
+import { useSessionStorage } from "usehooks-ts";
 
 /* App modules imports */
 import { useFetch, usePostFetch } from "@/hooks/useFetch";
 import logo from "@assets/images/logo.svg";
-
-/* Types imports */
-import { API_ADRESS } from "@/utils/constants";
-import { DataTransfer } from "@customTypes/ApiResponse";
-import type UserData from "@/types/UserData";
 import SideBar from "@components/SideBar";
-import API from "@/app/Api";
-import { useSessionStorage } from "usehooks-ts";
-import { SimulatorData } from "@customTypes/Simulator";
+import { API_ADRESS } from "@/utils/constants";
 import { SIMULATION_DATA } from "@/services/SessionStorage";
 import { nextTurn, simulatorInitialState } from "@utils/simulator";
+import API from "@/app/api";
+
+/* Types imports */
+import { DataTransfer } from "@customTypes/ApiResponse";
+import type UserData from "@/types/userData";
+import { SimulatorData } from "@customTypes/Simulator";
 
 function HomePage() {
   const [simulatorData, setSimulatorData] = useSessionStorage<SimulatorData>(SIMULATION_DATA, simulatorInitialState);

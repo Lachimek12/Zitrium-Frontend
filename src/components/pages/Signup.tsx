@@ -8,7 +8,7 @@ import axios, { AxiosError } from "axios";
 
 /* App modules imports */
 import { BASE_URL, REGISTER_ADDRESS } from "@utils/constants";
-import { ClosedEye, OpenedEye } from "@components/icons/eye";
+import { ClosedEye, OpenedEye } from "@components/icons/Eye";
 
 /* Types imports */
 import { RegisterFormFields, registerSchema } from "@customTypes/FormSchemas";

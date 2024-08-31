@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 
 /* App modules imports */
 import authReducer from "./AuthReducer";
-import API from "@/app/Api";
+import API from "@/app/api";
 import {
   LOCAL_STORAGE_PROFILE_KEY,
   LOGIN_ADDRESS,

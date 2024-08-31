@@ -40,6 +40,8 @@ export const theme = {
       },
       border: {
         700: "#69797d",
+        600: "#475657",
+        500: "#596262",
       },
     },
     boxShadow: {
