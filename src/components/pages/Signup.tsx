@@ -11,9 +11,9 @@ import { BASE_URL, REGISTER_ADDRESS } from "@utils/constants";
 import { ClosedEye, OpenedEye } from "@components/icons/Eye";
 
 /* Types imports */
-import { RegisterFormFields, registerSchema } from "@customTypes/FormSchemas";
+import { RegisterFormFields, registerSchema } from "@customTypes/formSchemas";
 import { removeSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/SessionStorage";
-import { SignUpInfo } from "@/types/Authentication";
+import { SignUpInfo } from "@/types/authentication";
 
 function Signup() {
   const {

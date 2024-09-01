@@ -1,4 +1,4 @@
-import { SimulatorData, EventType, Player, PlayerStatus, GameEvent } from "@customTypes/Simulator";
+import { SimulatorData, EventType, Player, PlayerStatus, GameEvent } from "@customTypes/simulator";
 
 const simulatorInitialState: SimulatorData = {
   players: [],

@@ -1,5 +1,5 @@
 /* App modules imports */
-import { LoginForm } from "./FormSchemas";
+import { LoginForm } from "./formSchemas";
 
 export type User = {
   name: string;

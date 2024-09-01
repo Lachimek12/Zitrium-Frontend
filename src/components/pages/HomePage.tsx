@@ -12,9 +12,9 @@ import { nextTurn, simulatorInitialState } from "@utils/simulator";
 import API from "@/app/api";
 
 /* Types imports */
-import { DataTransfer } from "@customTypes/ApiResponse";
+import { DataTransfer } from "@customTypes/apiResponse";
 import type UserData from "@/types/userData";
-import { SimulatorData } from "@customTypes/Simulator";
+import { SimulatorData } from "@customTypes/simulator";
 
 function HomePage() {
   const [simulatorData, setSimulatorData] = useSessionStorage<SimulatorData>(SIMULATION_DATA, simulatorInitialState);

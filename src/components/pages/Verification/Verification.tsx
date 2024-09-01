@@ -20,8 +20,8 @@ import {
 } from "@utils/constants";
 
 /* Types imports */
-import { VerificationForm } from "@customTypes/FormSchemas";
-import { SignUpInfo } from "@customTypes/Authentication";
+import { VerificationForm } from "@customTypes/formSchemas";
+import { SignUpInfo } from "@customTypes/authentication";
 
 function Verification() {
   /* register */

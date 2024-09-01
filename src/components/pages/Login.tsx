@@ -7,7 +7,7 @@ import { AxiosError } from "axios";
 
 /* Types imports */
 import { ClosedEye, OpenedEye } from "@components/icons/Eye";
-import { LoginForm, loginSchema } from "@customTypes/FormSchemas";
+import { LoginForm, loginSchema } from "@customTypes/formSchemas";
 import { useAuth } from "@contexts/AuthContext";
 
 function Login() {
