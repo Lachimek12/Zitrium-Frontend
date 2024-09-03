@@ -120,7 +120,11 @@ function Signup() {
           </div>
           {errors.confirmPassword && <div className="text-error-500">{errors.confirmPassword.message}</div>}
         </div>
-        <button className={`mt-6 ${isSubmitting && "hover:cursor-not-allowed"}`} disabled={isSubmitting} type="submit">
+        <button
+          className={`submit mt-6 ${isSubmitting && "hover:cursor-not-allowed"}`}
+          disabled={isSubmitting}
+          type="submit"
+        >
           {isSubmitting ? "...Loading" : "Submit"}
         </button>
         {errors.root && <div className="text-error-500">{errors.root.message}</div>}

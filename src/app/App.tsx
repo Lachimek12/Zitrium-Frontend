@@ -1,5 +1,6 @@
 /* Libraries */
 import { Navigate, Route, Routes } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 /* App modules imports */
 import HomePage from "@pages/HomePage";
@@ -14,6 +15,10 @@ import VerificationRoute from "@components/VerificationRoute";
 import MainLayout from "@layout/MainLayout";
 import FormLayout from "@layout/FormLayout";
 import { AuthProvider } from "@contexts/AuthContext";
+
+export function notify(message: string) {
+  toast.error(message);
+}
 
 function App() {
   return (
@@ -58,6 +63,16 @@ function App() {
         {/* Catch-all route for undefined paths */}
         <Route path="*" element={<Navigate to="/404" />} />
       </Routes>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        draggable
+        theme="dark"
+      />
     </AuthProvider>
   );
 }

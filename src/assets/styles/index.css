@@ -8,16 +8,14 @@
 @tailwind utilities;
 
 body {
-  @apply font-fantasy bg-background-800 text-white;
+  @apply bg-background-800 font-fantasy text-white;
 }
 
-button:not(.exclude),
-button[type="submit"] {
+button.submit {
   @apply rounded-md bg-gradient-to-r from-primary-500 to-secondary-600 px-6 py-3 text-white hover:opacity-50;
 }
 
-button:disabled,
-button[type="submit"]:disabled {
+button.submit:disabled {
   @apply opacity-50;
 }
 

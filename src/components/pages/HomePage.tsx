@@ -15,6 +15,7 @@ import API from "@/app/api";
 import { DataTransfer } from "@customTypes/apiResponse";
 import type UserData from "@/types/userData";
 import { SimulatorData } from "@customTypes/simulator";
+import { notify } from "@/index";
 
 function HomePage() {
   const [simulatorData, setSimulatorData] = useSessionStorage<SimulatorData>(SIMULATION_DATA, simulatorInitialState);

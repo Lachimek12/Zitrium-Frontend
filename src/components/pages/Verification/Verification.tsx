@@ -134,7 +134,7 @@ function Verification() {
         </div>
         <div className="flex flex-col gap-2">
           <button
-            className={`mt-6 ${(isSubmitting || code.length != 6) && "hover:cursor-not-allowed"}`}
+            className={`mt-6 ${(isSubmitting || code.length != 6) && "hover:cursor-not-allowed"} submit`}
             disabled={isSubmitting || code.length != 6}
             type="submit"
           >

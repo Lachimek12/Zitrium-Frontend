@@ -68,7 +68,11 @@ function Login() {
             {isPasswordVisible ? <OpenedEye /> : <ClosedEye />}
           </button>
         </div>
-        <button className={`${isSubmitting && "hover:cursor-not-allowed"}`} disabled={isSubmitting} type="submit">
+        <button
+          className={`submit ${isSubmitting && "hover:cursor-not-allowed"}`}
+          disabled={isSubmitting}
+          type="submit"
+        >
           {isSubmitting ? "...Loading" : "Sign In"}
         </button>
         {errors.root && <div className="text-error-500">{errors.root.message}</div>}
@@ -79,7 +83,7 @@ function Login() {
           </span>
         </div>
         <Link to="/register">
-          <button className="w-full rounded-full text-white">Create Account</button>
+          <button className="submit w-full rounded-full text-white">Create Account</button>
         </Link>
       </form>
     </div>

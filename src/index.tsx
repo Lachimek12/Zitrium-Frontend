@@ -6,6 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 /* App modules imports */
 import "@assets/styles/index.css";
 import App from "./app/App";
+import "react-toastify/dist/ReactToastify.css";
+
 // import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
