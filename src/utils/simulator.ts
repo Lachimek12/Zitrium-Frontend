@@ -1,28 +1,17 @@
 import { SimulatorData, EventType, Player, PlayerStatus, GameEvent } from "@customTypes/simulator";
 
 const simulatorInitialState: SimulatorData = {
-  players: [],
+  players: [
+    {
+      nickname: "Bob",
+      avatar: "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+      status: PlayerStatus.Alive,
+      hasEvent: false,
+    },
+  ],
   events: [],
   isGameOver: false,
 };
-
-function nextTurn(data: SimulatorData, setSimulatorData: React.Dispatch<React.SetStateAction<SimulatorData>>) {
-  if (data.isGameOver) {
-    return;
-  }
-  data.events = [];
-  data.players.forEach((player) => (player.hasEvent = false));
-
-  data.players.forEach((player) => {
-    if (player.hasEvent || player.status == PlayerStatus.Dead) {
-      return;
-    }
-    generateEvent(player, data);
-  });
-
-  checkGameOver(data);
-  setSimulatorData(data);
-}
 
 function generateEvent(player: Player, data: SimulatorData) {
   const avaibleEvents: (string | EventType)[] = Object.values(EventType);
@@ -70,4 +59,4 @@ function generateEventHelper(player: Player, players: Player[], event: EventType
   }
 }
 
-export { simulatorInitialState, nextTurn };
+export { simulatorInitialState, generateEvent, checkGameOver };

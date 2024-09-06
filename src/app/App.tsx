@@ -15,6 +15,7 @@ import VerificationRoute from "@components/VerificationRoute";
 import MainLayout from "@layout/MainLayout";
 import FormLayout from "@layout/FormLayout";
 import { AuthProvider } from "@contexts/AuthContext";
+import { SimulatorProvider } from "@contexts/SimulatorContext";
 
 export function notify(message: string) {
   toast.error(message);
@@ -28,7 +29,13 @@ function App() {
         <Route path="/" element={<Navigate to="/app" />} />
 
         {/* Routes with MainLayout */}
-        <Route element={<MainLayout />}>
+        <Route
+          element={
+            <SimulatorProvider>
+              <MainLayout />
+            </SimulatorProvider>
+          }
+        >
           <Route path="/app" element={<HomePage />} />
           <Route path="/test" element={<Test />} />
           <Route

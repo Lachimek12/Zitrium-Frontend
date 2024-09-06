@@ -4,9 +4,9 @@ import { Outlet } from "react-router-dom";
 /* App modules imports */
 import Footer from "@components/Footer";
 
-function MainLayout() {
+function FormLayout() {
   return (
-    <div className="h-screen flex flex-col">
+    <div className="flex h-screen flex-col">
       <div className="flex-grow">
         <Outlet />
       </div>
@@ -17,4 +17,4 @@ function MainLayout() {
   );
 }
 
-export default MainLayout;
+export default FormLayout;

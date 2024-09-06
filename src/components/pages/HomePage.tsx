@@ -1,27 +1,18 @@
 /* Libraries */
 import { useState, useEffect } from "react";
-import { useSessionStorage } from "usehooks-ts";
 
 /* App modules imports */
 import { useFetch, usePostFetch } from "@/hooks/useFetch";
 import logo from "@assets/images/logo.svg";
 import SideBar from "@components/SideBar";
 import { API_ADRESS } from "@/utils/constants";
-import { SIMULATION_DATA } from "@/services/SessionStorage";
-import { nextTurn, simulatorInitialState } from "@utils/simulator";
 import API from "@/app/api";
 
 /* Types imports */
 import { DataTransfer } from "@customTypes/apiResponse";
 import type UserData from "@/types/userData";
-import { SimulatorData } from "@customTypes/simulator";
-import { notify } from "@/index";
 
 function HomePage() {
-  const [simulatorData, setSimulatorData] = useSessionStorage<SimulatorData>(SIMULATION_DATA, simulatorInitialState);
-
-  // OLD STUFF
-
   const [userData] = useState<UserData>({
     name: "Jeff",
     email: "xdd@wp.pl",
@@ -43,7 +34,6 @@ function HomePage() {
 
   const handleReceiveButton = async () => {
     response.request();
-    nextTurn(simulatorData, setSimulatorData);
   };
 
   const handleSendButton = async () => {
@@ -52,10 +42,7 @@ function HomePage() {
     });
     post.request();
     console.log("skibidi");
-    console.log(simulatorData.isGameOver);
   };
-
-  // END OF OLD STUFF
 
   return (
     <div className="relative flex flex-grow">

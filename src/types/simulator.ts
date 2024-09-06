@@ -1,3 +1,10 @@
+export interface SimulatorContextType {
+  simulatorData: SimulatorData;
+  nextTurn: () => void;
+  addNewPlayer: (player: Player) => void;
+  deletePlayer: (indexToRemove: number) => void;
+}
+
 export interface SimulatorData {
   players: Player[];
   events: GameEvent[];

@@ -7,9 +7,15 @@ import UploadImage from "./icons/UploadImage";
 import CopyIcon from "./icons/CopyIcon";
 import { notify } from "@/app/App";
 import Transparent from "../../assets/images/Transparent.png";
+import DeleteIcon from "./icons/DeleteIcon";
+import { useSimulator } from "@contexts/SimulatorContext";
 
 type CopyFromClipBoardPrompts = {
   copyAction: (arg0: string) => void;
+};
+
+type TilePlayerIndex = {
+  playerIndex: number;
 };
 
 function CopyFromClipBoard({ copyAction }: CopyFromClipBoardPrompts) {
@@ -35,9 +41,10 @@ function CopyFromClipBoard({ copyAction }: CopyFromClipBoardPrompts) {
   return <div className="flex-1" onClick={handleClick}></div>;
 }
 
-function Tile() {
+function Tile({ playerIndex }: TilePlayerIndex) {
   const [imageUrl, setImageUrl] = useState<string>(Transparent);
   const [isDragOver, setIsDragOver] = useState<boolean>(true);
+  const simulatorContext = useSimulator();
 
   const createTmpUrlFromImage = (file: File) => {
     const url = URL.createObjectURL(file);
@@ -61,25 +68,37 @@ function Tile() {
     setImageUrl(Transparent);
   };
 
+  const deleteTile = () => {
+    simulatorContext.deletePlayer(playerIndex);
+  };
+
   return (
     <div className="relative flex flex-1">
       <div
-        className="group/main m-0 flex flex-1 flex-col rounded-lg p-0 hover:cursor-pointer hover:ring-2 hover:ring-border-600"
+        className="group/main flex flex-1 flex-col overflow-clip rounded-lg hover:cursor-pointer hover:ring-2 hover:ring-border-600"
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDragExit={handleDragLeave}
         onDragEnd={handleDragLeave}
         onDrop={handleDragLeave}
       >
+        {isDragOver && (
+          <div
+            className="absolute right-1 top-1 z-10 flex h-8 w-8 items-center opacity-50 hover:opacity-100"
+            onClick={deleteTile}
+          >
+            <DeleteIcon />
+          </div>
+        )}
         <div className="group relative flex flex-1">
           <div className="flex flex-1">
             <DragDrop fileAction={createTmpUrlFromImage} />
           </div>
-          <div className="pointer-events-none absolute flex h-[100%] w-[100%] items-center justify-center p-6 opacity-50 group-hover:opacity-80">
+          <div className="pointer-events-none absolute flex h-[100%] w-[100%] items-center p-6 opacity-50 group-hover:opacity-80">
             <div className="flex h-[30%] w-[30%] flex-none scale-150 items-center justify-center pr-3">
               <UploadImage />
             </div>
-            <p className="flex-1 text-sm">Choose file or drag it here</p>
+            <p className="text-sm">Choose file or drag it here</p>
           </div>
         </div>
         {isDragOver && (
@@ -89,17 +108,17 @@ function Tile() {
               <div className="flex flex-1">
                 <CopyFromClipBoard copyAction={setUrl} />
               </div>
-              <div className="pointer-events-none absolute flex h-[100%] w-[100%] items-center justify-center p-6 opacity-50 group-hover:opacity-80">
-                <div className="flex h-[30%] w-[30%] flex-none scale-150 items-center justify-center pr-3">
+              <div className="pointer-events-none absolute flex h-[100%] w-[100%] items-center p-6 opacity-50 group-hover:opacity-80">
+                <div className="flex h-[30%] w-[30%] scale-150 items-center pr-3">
                   <CopyIcon />
                 </div>
-                <p className="flex-1 text-sm">Click here to copy from clipboard</p>
+                <p className="text-sm">Click here to copy from clipboard</p>
               </div>
             </div>
           </>
         )}
-        <div className="pointer-events-none absolute flex h-[100%] w-[100%] object-contain group-hover/main:opacity-5">
-          <img className="flex-1 rounded-lg" src={imageUrl ? imageUrl : ""} onError={handleOnError} />
+        <div className="pointer-events-none absolute z-20 flex h-[100%] w-[100%] group-hover/main:opacity-5">
+          <img className="rounded-lg" src={imageUrl ? imageUrl : ""} onError={handleOnError} />
         </div>
       </div>
     </div>
