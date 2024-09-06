@@ -1,14 +1,17 @@
 /* Libraries */
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 /* App modules imports */
 import { useAuth } from "@contexts/AuthContext";
 import ProfileFrame from "@components/ProfileFrame";
 import { SIGMA_IMAGE_SRC } from "@utils/constants";
 
+/* Types imports */
+import { Auth } from "@customTypes/authentication";
+
 function Navbar() {
-  const authContext = useAuth();
-  const navigate = useNavigate();
+  const authContext: Auth = useAuth();
+  const navigate: NavigateFunction = useNavigate();
 
   return (
     <>

@@ -1,7 +1,7 @@
 /* Libraries */
 import { SubmitHandler, useForm } from "react-hook-form";
 import VerificationInput from "react-verification-input";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useTimer } from "react-timer-hook";
 import { useSessionStorage } from "usehooks-ts";
 import { useEffect, useState } from "react";
@@ -10,18 +10,20 @@ import axios, { AxiosError } from "axios";
 /* App modules imports */
 import styles from "./Verification.module.css";
 import { getNextDate } from "@utils/time";
-import { removeSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/SessionStorage";
+import { removeSessionStorageItem } from "@/services/SessionStorage";
 import { useAuth } from "@contexts/AuthContext";
 import {
   VERIFICATION_CODE_EXPIRATION_TIMEOUT_SEC,
   VERIFY_EMAIL_ADDRESS,
   RESEND_VERIFICATION_ADDRESS,
   BASE_URL,
+  SIGN_UP_INFO,
+  TIMEOUT,
 } from "@utils/constants";
 
 /* Types imports */
 import { VerificationForm } from "@customTypes/formSchemas";
-import { SignUpInfo } from "@customTypes/authentication";
+import { Auth, SignUpInfo } from "@customTypes/authentication";
 
 function Verification() {
   /* register */
@@ -42,8 +44,8 @@ function Verification() {
   const { seconds, minutes, restart } = useTimer({ expiryTimestamp: new Date(expirationTime) });
 
   /* other */
-  const navigate = useNavigate();
-  const authContext = useAuth();
+  const navigate: NavigateFunction = useNavigate();
+  const authContext: Auth = useAuth();
 
   useEffect(() => {
     setExpirationTime(expirationTime);

@@ -1,19 +1,18 @@
 /* Libraries */
 /* App modules imports */
-import { notify } from "@/app/App";
 import PlusIcon from "./icons/PlusIcon";
 import { useSimulator } from "@contexts/SimulatorContext";
 
 /* Types imports */
-import { Player, PlayerStatus } from "@customTypes/simulator";
+import { Player, PlayerStatus, SimulatorContextType } from "@customTypes/simulator";
 
 function Tile() {
-  const simulatorContext = useSimulator();
+  const simulatorContext: SimulatorContextType = useSimulator();
 
   const addPlayer = () => {
     const player: Player = {
       nickname: "bob",
-      avatar: "",
+      avatar: "https://gratisography.com/wp-content/uploads/2024/01/gratisography-cyber-kitty-800x525.jpg",
       status: PlayerStatus.Alive,
       hasEvent: false,
     };

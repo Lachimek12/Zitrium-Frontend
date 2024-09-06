@@ -5,14 +5,17 @@ import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 
-/* Types imports */
+/* App modules imports */
 import { ClosedEye, OpenedEye } from "@components/icons/Eye";
-import { LoginForm, loginSchema } from "@customTypes/formSchemas";
 import { useAuth } from "@contexts/AuthContext";
 
+/* Types imports */
+import { LoginForm, loginSchema } from "@customTypes/formSchemas";
+import { Auth } from "@customTypes/authentication";
+
 function Login() {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(true);
-  const authContext = useAuth();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const authContext: Auth = useAuth();
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -65,7 +68,7 @@ function Login() {
             onClick={togglePasswordVisibility}
             tabIndex={-1}
           >
-            {isPasswordVisible ? <OpenedEye /> : <ClosedEye />}
+            {!isPasswordVisible ? <OpenedEye /> : <ClosedEye />}
           </button>
         </div>
         <button

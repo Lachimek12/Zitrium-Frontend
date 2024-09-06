@@ -30,7 +30,7 @@ function CopyFromClipBoard({ copyAction }: CopyFromClipBoardPrompts) {
 
   const handleClick = async () => {
     try {
-      const text = await navigator.clipboard.readText();
+      const text: string = await navigator.clipboard.readText();
       setClipboardValue(text);
       setclickIndex(clickIndex + 1);
     } catch (error) {
@@ -42,17 +42,16 @@ function CopyFromClipBoard({ copyAction }: CopyFromClipBoardPrompts) {
 }
 
 function Tile({ playerIndex }: TilePlayerIndex) {
-  const [imageUrl, setImageUrl] = useState<string>(Transparent);
   const [isDragOver, setIsDragOver] = useState<boolean>(true);
   const simulatorContext = useSimulator();
 
   const createTmpUrlFromImage = (file: File) => {
-    const url = URL.createObjectURL(file);
-    setImageUrl(url);
+    const url: string = URL.createObjectURL(file);
+    simulatorContext.updatePlayerAvatar(playerIndex, url);
   };
 
   const setUrl = async (url: string) => {
-    setImageUrl(url);
+    simulatorContext.updatePlayerAvatar(playerIndex, url);
   };
 
   const handleDragOver = () => {
@@ -65,7 +64,7 @@ function Tile({ playerIndex }: TilePlayerIndex) {
 
   const handleOnError = () => {
     notify("Failed to load the image");
-    setImageUrl(Transparent);
+    simulatorContext.updatePlayerAvatar(playerIndex, Transparent);
   };
 
   const deleteTile = () => {
@@ -118,7 +117,15 @@ function Tile({ playerIndex }: TilePlayerIndex) {
           </>
         )}
         <div className="pointer-events-none absolute z-20 flex h-[100%] w-[100%] group-hover/main:opacity-5">
-          <img className="rounded-lg" src={imageUrl ? imageUrl : ""} onError={handleOnError} />
+          <img
+            className="rounded-lg"
+            src={
+              simulatorContext.simulatorData.players[playerIndex].avatar
+                ? simulatorContext.simulatorData.players[playerIndex].avatar
+                : ""
+            }
+            onError={handleOnError}
+          />
         </div>
       </div>
     </div>

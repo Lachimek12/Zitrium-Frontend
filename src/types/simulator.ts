@@ -3,6 +3,8 @@ export interface SimulatorContextType {
   nextTurn: () => void;
   addNewPlayer: (player: Player) => void;
   deletePlayer: (indexToRemove: number) => void;
+  updatePlayerNickname: (playerIndex: number, playerNickname: string) => void;
+  updatePlayerAvatar: (playerIndex: number, playerAvatar: string) => void;
 }
 
 export interface SimulatorData {

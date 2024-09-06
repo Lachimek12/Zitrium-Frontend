@@ -3,16 +3,16 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSessionStorage } from "usehooks-ts";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 
 /* App modules imports */
-import { BASE_URL, REGISTER_ADDRESS } from "@utils/constants";
+import { BASE_URL, REGISTER_ADDRESS, SIGN_UP_INFO, TIMEOUT } from "@utils/constants";
 import { ClosedEye, OpenedEye } from "@components/icons/Eye";
+import { removeSessionStorageItem } from "@/services/SessionStorage";
 
 /* Types imports */
 import { RegisterFormFields, registerSchema } from "@customTypes/formSchemas";
-import { removeSessionStorageItem, SIGN_UP_INFO, TIMEOUT } from "@/services/SessionStorage";
 import { SignUpInfo } from "@/types/authentication";
 
 function Signup() {
@@ -29,7 +29,7 @@ function Signup() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
   const [, setSignUpInfo] = useSessionStorage(SIGN_UP_INFO, {});
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
 
   // Value removed if comming back from verification in order to route user correctly
   removeSessionStorageItem(SIGN_UP_INFO);
@@ -95,7 +95,7 @@ function Signup() {
               onClick={togglePasswordVisibility}
               tabIndex={-1}
             >
-              {isPasswordVisible ? <OpenedEye /> : <ClosedEye />}
+              {!isPasswordVisible ? <OpenedEye /> : <ClosedEye />}
             </button>
           </div>
           {errors.password && <div className="text-error-500">{errors.password.message}</div>}

@@ -5,10 +5,10 @@ import cloneDeep from "lodash/cloneDeep";
 
 /* App modules imports */
 import { checkGameOver, generateEvent, simulatorInitialState } from "@utils/simulator";
+import { SIMULATION_DATA } from "@utils/constants";
 
 /* Types imports */
 import { Player, PlayerStatus, SimulatorContextType, SimulatorData } from "@customTypes/simulator";
-import { SIMULATION_DATA } from "@/services/SessionStorage";
 
 const SimulatorContext = createContext<SimulatorContextType | undefined>(undefined);
 
@@ -19,7 +19,7 @@ const SimulatorProvider: FC<PropsWithChildren> = memo(({ children }) => {
     if (simulatorData.isGameOver) {
       return;
     }
-    const nextSimulatorData = cloneDeep(simulatorData);
+    const nextSimulatorData: SimulatorData = cloneDeep(simulatorData);
 
     nextSimulatorData.events = [];
     nextSimulatorData.players.forEach((player) => (player.hasEvent = false));
@@ -49,14 +49,34 @@ const SimulatorProvider: FC<PropsWithChildren> = memo(({ children }) => {
     }));
   }, []);
 
+  const updatePlayerNickname = useCallback((playerIndex: number, playerNickname: string) => {
+    setSimulatorData((prevSimulatorData) => ({
+      ...prevSimulatorData,
+      players: prevSimulatorData.players.map((player, index) =>
+        index === playerIndex ? { ...player, nickname: playerNickname } : player,
+      ),
+    }));
+  }, []);
+
+  const updatePlayerAvatar = useCallback((playerIndex: number, playerAvatar: string) => {
+    setSimulatorData((prevSimulatorData) => ({
+      ...prevSimulatorData,
+      players: prevSimulatorData.players.map((player, index) =>
+        index === playerIndex ? { ...player, avatar: playerAvatar } : player,
+      ),
+    }));
+  }, []);
+
   return (
-    <SimulatorContext.Provider value={{ simulatorData, nextTurn, addNewPlayer, deletePlayer }}>
+    <SimulatorContext.Provider
+      value={{ simulatorData, nextTurn, addNewPlayer, deletePlayer, updatePlayerNickname, updatePlayerAvatar }}
+    >
       {children}
     </SimulatorContext.Provider>
   );
 });
 
-function useSimulator() {
+function useSimulator(): SimulatorContextType {
   const context = useContext(SimulatorContext);
 
   if (context === undefined) {

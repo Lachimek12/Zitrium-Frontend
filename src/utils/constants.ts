@@ -12,6 +12,15 @@ export const RESEND_VERIFICATION_ADDRESS = "/register/resend-verify";
 /* Local storage keys */
 export const LOCAL_STORAGE_PROFILE_KEY = "profile";
 
+/* Session storage keys */
+
+/**
+ * Session key used for registration and verification
+ */
+export const SIGN_UP_INFO = "signUpInfo";
+export const TIMEOUT = "timeout";
+export const SIMULATION_DATA = "simulationData";
+
 /* Other */
 export const VERIFICATION_CODE_EXPIRATION_TIMEOUT_SEC = 600;
 export const USER_TOKEN_EXPIRATION_TIMEOUT_MS = 1000 * 60 * 60 * 24 * 14; // 2 weeks

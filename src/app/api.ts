@@ -1,11 +1,11 @@
 /* Libraries */
-import axios, { InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
 /* App modules imports */
 import { LOCAL_STORAGE_PROFILE_KEY, BASE_URL } from "@utils/constants";
 
 function authInterceptor(req: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
-  const profile = localStorage.getItem(LOCAL_STORAGE_PROFILE_KEY);
+  const profile: string | null = localStorage.getItem(LOCAL_STORAGE_PROFILE_KEY);
   const accessToken = profile ? JSON.parse(profile)?.accessToken : null;
   console.log(accessToken);
   if (accessToken) {
@@ -14,7 +14,7 @@ function authInterceptor(req: InternalAxiosRequestConfig): InternalAxiosRequestC
   return req;
 }
 
-const API = axios.create({
+const API: AxiosInstance = axios.create({
   baseURL: BASE_URL,
 });
 

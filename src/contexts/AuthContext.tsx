@@ -2,6 +2,7 @@
 import { createContext, FC, memo, PropsWithChildren, useCallback, useContext, useEffect, useReducer } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import { useLocalStorage } from "usehooks-ts";
 
 /* App modules imports */
 import authReducer from "./authReducer";
@@ -16,7 +17,6 @@ import {
 /* Types imports */
 import { Auth, AuthActions, AuthReducer, Profile } from "@/types/authentication";
 import { LoginForm } from "@customTypes/formSchemas";
-import { useLocalStorage } from "usehooks-ts";
 
 const AuthInitialState: Auth = {
   isLoading: false,
@@ -39,7 +39,7 @@ const AuthProvider: FC<AuthProviderProps> = memo(({ children }) => {
   const [, setProfile] = useLocalStorage<Profile>(LOCAL_STORAGE_PROFILE_KEY, {
     accessToken: "",
   } as Profile);
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
     initializeAuth(dispatch);
@@ -89,7 +89,7 @@ const AuthProvider: FC<AuthProviderProps> = memo(({ children }) => {
   return <AuthContext.Provider value={{ ...state, login, logout }}>{children}</AuthContext.Provider>;
 });
 
-function useAuth() {
+function useAuth(): Auth {
   const context = useContext(AuthContext);
 
   if (context === undefined) {

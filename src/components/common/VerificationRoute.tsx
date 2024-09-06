@@ -1,18 +1,19 @@
 /* Libraries */
 import { PropsWithChildren, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
 
 /* App modules imports */
-import { existSessionStorageItem, SIGN_UP_INFO } from "@/services/SessionStorage";
+import { existSessionStorageItem } from "@/services/SessionStorage";
+import { SIGN_UP_INFO } from "@utils/constants";
 
 type VerificationRouteProps = PropsWithChildren;
 
 function VerificationRoute({ children }: VerificationRouteProps) {
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    const currentPath = location.pathname;
+    const currentPath: string = location.pathname;
 
     if (currentPath === "/verification" && !existSessionStorageItem(SIGN_UP_INFO)) {
       navigate("/register", { replace: true });
